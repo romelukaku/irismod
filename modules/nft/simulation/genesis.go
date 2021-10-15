@@ -21,7 +21,7 @@ const (
 func RandomizedGenState(simState *module.SimulationState) {
 	collections := types.NewCollections(
 		types.NewCollection(
-			types.Denom{
+			types.Class{
 				Id:      doggos,
 				Name:    doggos,
 				Schema:  "",
@@ -31,7 +31,7 @@ func RandomizedGenState(simState *module.SimulationState) {
 			types.NFTs{},
 		),
 		types.NewCollection(
-			types.Denom{
+			types.Class{
 				Id:      kitties,
 				Name:    kitties,
 				Schema:  "",
@@ -43,8 +43,8 @@ func RandomizedGenState(simState *module.SimulationState) {
 	for _, acc := range simState.Accounts {
 		// 10% of accounts own an NFT
 		if simState.Rand.Intn(100) < 10 {
-			baseNFT := types.NewBaseNFT(
-				RandnNFTID(simState.Rand, types.MinDenomLen, types.MaxDenomLen), // id
+			NFT := types.NewNFT(
+				RandnNFTID(simState.Rand, types.MinClassLen, types.MaxClassLen), // id
 				simtypes.RandStringOfLength(simState.Rand, 10),
 				acc.Address,
 				simtypes.RandStringOfLength(simState.Rand, 45), // tokenURI
@@ -53,11 +53,11 @@ func RandomizedGenState(simState *module.SimulationState) {
 
 			// 50% doggos and 50% kitties
 			if simState.Rand.Intn(100) < 50 {
-				collections[0].Denom.Creator = baseNFT.Owner
-				collections[0] = collections[0].AddNFT(baseNFT)
+				collections[0].Class.Creator = NFT.Owner
+				collections[0] = collections[0].AddNFT(NFT)
 			} else {
-				collections[1].Denom.Creator = baseNFT.Owner
-				collections[1] = collections[1].AddNFT(baseNFT)
+				collections[1].Class.Creator = NFT.Owner
+				collections[1] = collections[1].AddNFT(NFT)
 			}
 		}
 	}

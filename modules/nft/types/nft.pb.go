@@ -23,8 +23,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// BaseNFT defines a non-fungible token
-type BaseNFT struct {
+// NFT defines a non-fungible token
+type NFT struct {
 	Id    string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name  string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	URI   string `protobuf:"bytes,3,opt,name=uri,proto3" json:"uri,omitempty"`
@@ -32,18 +32,18 @@ type BaseNFT struct {
 	Owner string `protobuf:"bytes,5,opt,name=owner,proto3" json:"owner,omitempty"`
 }
 
-func (m *BaseNFT) Reset()         { *m = BaseNFT{} }
-func (m *BaseNFT) String() string { return proto.CompactTextString(m) }
-func (*BaseNFT) ProtoMessage()    {}
-func (*BaseNFT) Descriptor() ([]byte, []int) {
+func (m *NFT) Reset()         { *m = NFT{} }
+func (m *NFT) String() string { return proto.CompactTextString(m) }
+func (*NFT) ProtoMessage()    {}
+func (*NFT) Descriptor() ([]byte, []int) {
 	return fileDescriptor_fe8ab7e15b7f0646, []int{0}
 }
-func (m *BaseNFT) XXX_Unmarshal(b []byte) error {
+func (m *NFT) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *BaseNFT) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *NFT) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_BaseNFT.Marshal(b, m, deterministic)
+		return xxx_messageInfo_NFT.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -53,20 +53,20 @@ func (m *BaseNFT) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *BaseNFT) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BaseNFT.Merge(m, src)
+func (m *NFT) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NFT.Merge(m, src)
 }
-func (m *BaseNFT) XXX_Size() int {
+func (m *NFT) XXX_Size() int {
 	return m.Size()
 }
-func (m *BaseNFT) XXX_DiscardUnknown() {
-	xxx_messageInfo_BaseNFT.DiscardUnknown(m)
+func (m *NFT) XXX_DiscardUnknown() {
+	xxx_messageInfo_NFT.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_BaseNFT proto.InternalMessageInfo
+var xxx_messageInfo_NFT proto.InternalMessageInfo
 
-// Denom defines a type of NFT
-type Denom struct {
+// Class defines a type of NFT
+type Class struct {
 	Id               string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name             string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Schema           string `protobuf:"bytes,3,opt,name=schema,proto3" json:"schema,omitempty"`
@@ -76,18 +76,18 @@ type Denom struct {
 	UpdateRestricted bool   `protobuf:"varint,7,opt,name=update_restricted,json=updateRestricted,proto3" json:"update_restricted,omitempty"`
 }
 
-func (m *Denom) Reset()         { *m = Denom{} }
-func (m *Denom) String() string { return proto.CompactTextString(m) }
-func (*Denom) ProtoMessage()    {}
-func (*Denom) Descriptor() ([]byte, []int) {
+func (m *Class) Reset()         { *m = Class{} }
+func (m *Class) String() string { return proto.CompactTextString(m) }
+func (*Class) ProtoMessage()    {}
+func (*Class) Descriptor() ([]byte, []int) {
 	return fileDescriptor_fe8ab7e15b7f0646, []int{1}
 }
-func (m *Denom) XXX_Unmarshal(b []byte) error {
+func (m *Class) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Denom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Class) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Denom.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Class.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -97,21 +97,21 @@ func (m *Denom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Denom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Denom.Merge(m, src)
+func (m *Class) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Class.Merge(m, src)
 }
-func (m *Denom) XXX_Size() int {
+func (m *Class) XXX_Size() int {
 	return m.Size()
 }
-func (m *Denom) XXX_DiscardUnknown() {
-	xxx_messageInfo_Denom.DiscardUnknown(m)
+func (m *Class) XXX_DiscardUnknown() {
+	xxx_messageInfo_Class.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Denom proto.InternalMessageInfo
+var xxx_messageInfo_Class proto.InternalMessageInfo
 
 // IDCollection defines a type of collection with specified ID
 type IDCollection struct {
-	DenomId  string   `protobuf:"bytes,1,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId  string   `protobuf:"bytes,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	TokenIds []string `protobuf:"bytes,2,rep,name=token_ids,json=tokenIds,proto3" json:"token_ids,omitempty" yaml:"token_ids"`
 }
 
@@ -189,8 +189,8 @@ var xxx_messageInfo_Owner proto.InternalMessageInfo
 
 // Collection defines a type of collection
 type Collection struct {
-	Denom Denom     `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom"`
-	NFTs  []BaseNFT `protobuf:"bytes,2,rep,name=nfts,proto3" json:"nfts"`
+	Class Class `protobuf:"bytes,1,opt,name=class,proto3" json:"class"`
+	NFTs  []NFT `protobuf:"bytes,2,rep,name=nfts,proto3" json:"nfts"`
 }
 
 func (m *Collection) Reset()         { *m = Collection{} }
@@ -227,8 +227,8 @@ func (m *Collection) XXX_DiscardUnknown() {
 var xxx_messageInfo_Collection proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*BaseNFT)(nil), "irismod.nft.BaseNFT")
-	proto.RegisterType((*Denom)(nil), "irismod.nft.Denom")
+	proto.RegisterType((*NFT)(nil), "irismod.nft.NFT")
+	proto.RegisterType((*Class)(nil), "irismod.nft.Class")
 	proto.RegisterType((*IDCollection)(nil), "irismod.nft.IDCollection")
 	proto.RegisterType((*Owner)(nil), "irismod.nft.Owner")
 	proto.RegisterType((*Collection)(nil), "irismod.nft.Collection")
@@ -273,14 +273,14 @@ var fileDescriptor_fe8ab7e15b7f0646 = []byte{
 	0xff, 0xff, 0xcd, 0xca, 0x3c, 0x53, 0x5b, 0x03, 0x00, 0x00,
 }
 
-func (this *BaseNFT) Equal(that interface{}) bool {
+func (this *NFT) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*BaseNFT)
+	that1, ok := that.(*NFT)
 	if !ok {
-		that2, ok := that.(BaseNFT)
+		that2, ok := that.(NFT)
 		if ok {
 			that1 = &that2
 		} else {
@@ -309,14 +309,14 @@ func (this *BaseNFT) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *Denom) Equal(that interface{}) bool {
+func (this *Class) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*Denom)
+	that1, ok := that.(*Class)
 	if !ok {
-		that2, ok := that.(Denom)
+		that2, ok := that.(Class)
 		if ok {
 			that1 = &that2
 		} else {
@@ -370,7 +370,7 @@ func (this *IDCollection) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.DenomId != that1.DenomId {
+	if this.ClassId != that1.ClassId {
 		return false
 	}
 	if len(this.TokenIds) != len(that1.TokenIds) {
@@ -434,7 +434,7 @@ func (this *Collection) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if !this.Denom.Equal(&that1.Denom) {
+	if !this.Class.Equal(&that1.Class) {
 		return false
 	}
 	if len(this.NFTs) != len(that1.NFTs) {
@@ -447,7 +447,7 @@ func (this *Collection) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (m *BaseNFT) Marshal() (dAtA []byte, err error) {
+func (m *NFT) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -457,12 +457,12 @@ func (m *BaseNFT) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *BaseNFT) MarshalTo(dAtA []byte) (int, error) {
+func (m *NFT) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *BaseNFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -505,7 +505,7 @@ func (m *BaseNFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *Denom) Marshal() (dAtA []byte, err error) {
+func (m *Class) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -515,12 +515,12 @@ func (m *Denom) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Denom) MarshalTo(dAtA []byte) (int, error) {
+func (m *Class) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Denom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Class) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -612,10 +612,10 @@ func (m *IDCollection) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintNft(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintNft(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -701,7 +701,7 @@ func (m *Collection) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		}
 	}
 	{
-		size, err := m.Denom.MarshalToSizedBuffer(dAtA[:i])
+		size, err := m.Class.MarshalToSizedBuffer(dAtA[:i])
 		if err != nil {
 			return 0, err
 		}
@@ -724,7 +724,7 @@ func encodeVarintNft(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *BaseNFT) Size() (n int) {
+func (m *NFT) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -753,7 +753,7 @@ func (m *BaseNFT) Size() (n int) {
 	return n
 }
 
-func (m *Denom) Size() (n int) {
+func (m *Class) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -794,7 +794,7 @@ func (m *IDCollection) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovNft(uint64(l))
 	}
@@ -832,7 +832,7 @@ func (m *Collection) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Denom.Size()
+	l = m.Class.Size()
 	n += 1 + l + sovNft(uint64(l))
 	if len(m.NFTs) > 0 {
 		for _, e := range m.NFTs {
@@ -849,7 +849,7 @@ func sovNft(x uint64) (n int) {
 func sozNft(x uint64) (n int) {
 	return sovNft(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *BaseNFT) Unmarshal(dAtA []byte) error {
+func (m *NFT) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -872,10 +872,10 @@ func (m *BaseNFT) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BaseNFT: wiretype end group for non-group")
+			return fmt.Errorf("proto: NFT: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BaseNFT: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: NFT: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1059,7 +1059,7 @@ func (m *BaseNFT) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Denom) Unmarshal(dAtA []byte) error {
+func (m *Class) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1082,10 +1082,10 @@ func (m *Denom) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Denom: wiretype end group for non-group")
+			return fmt.Errorf("proto: Class: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Denom: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Class: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1340,7 +1340,7 @@ func (m *IDCollection) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1368,7 +1368,7 @@ func (m *IDCollection) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1570,7 +1570,7 @@ func (m *Collection) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Class", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1597,7 +1597,7 @@ func (m *Collection) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Denom.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Class.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1630,7 +1630,7 @@ func (m *Collection) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.NFTs = append(m.NFTs, BaseNFT{})
+			m.NFTs = append(m.NFTs, NFT{})
 			if err := m.NFTs[len(m.NFTs)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}

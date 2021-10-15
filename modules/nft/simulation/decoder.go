@@ -15,7 +15,7 @@ func NewDecodeStore(cdc codec.Codec) func(kvA, kvB kv.Pair) string {
 	return func(kvA, kvB kv.Pair) string {
 		switch {
 		case bytes.Equal(kvA.Key[:1], types.PrefixNFT):
-			var nftA, nftB types.BaseNFT
+			var nftA, nftB types.NFT
 			cdc.MustUnmarshal(kvA.Value, &nftA)
 			cdc.MustUnmarshal(kvB.Value, &nftB)
 			return fmt.Sprintf("%v\n%v", nftA, nftB)
@@ -27,11 +27,11 @@ func NewDecodeStore(cdc codec.Codec) func(kvA, kvB kv.Pair) string {
 			supplyA := types.MustUnMarshalSupply(cdc, kvA.Value)
 			supplyB := types.MustUnMarshalSupply(cdc, kvB.Value)
 			return fmt.Sprintf("%d\n%d", supplyA, supplyB)
-		case bytes.Equal(kvA.Key[:1], types.PrefixDenom):
-			var denomA, denomB types.Denom
-			cdc.MustUnmarshal(kvA.Value, &denomA)
-			cdc.MustUnmarshal(kvB.Value, &denomB)
-			return fmt.Sprintf("%v\n%v", denomA, denomB)
+		case bytes.Equal(kvA.Key[:1], types.PrefixClass):
+			var classA, classB types.Class
+			cdc.MustUnmarshal(kvA.Value, &classA)
+			cdc.MustUnmarshal(kvB.Value, &classB)
+			return fmt.Sprintf("%v\n%v", classA, classB)
 
 		default:
 			panic(fmt.Sprintf("invalid %s key prefix %X", types.ModuleName, kvA.Key[:1]))

@@ -16,23 +16,23 @@ import (
 
 func registerQueryRoutes(cliCtx client.Context, r *mux.Router, queryRoute string) {
 	// Get the total supply of a collection or owner
-	r.HandleFunc(fmt.Sprintf("/%s/collections/{%s}/supply", types.ModuleName, RestParamDenomID), querySupply(cliCtx, queryRoute)).Methods("GET")
+	r.HandleFunc(fmt.Sprintf("/%s/collections/{%s}/supply", types.ModuleName, RestParamClassID), querySupply(cliCtx, queryRoute)).Methods("GET")
 	// Get the collections of NFTs owned by an address
 	r.HandleFunc(fmt.Sprintf("/%s/owners/{%s}", types.ModuleName, RestParamOwner), queryOwner(cliCtx, queryRoute)).Methods("GET")
 	// Get all the NFTs from a given collection
-	r.HandleFunc(fmt.Sprintf("/%s/collections/{%s}", types.ModuleName, RestParamDenomID), queryCollection(cliCtx, queryRoute)).Methods("GET")
-	// Query all denoms
-	r.HandleFunc(fmt.Sprintf("/%s/denoms", types.ModuleName), queryDenoms(cliCtx, queryRoute)).Methods("GET")
-	// Query the denom
-	r.HandleFunc(fmt.Sprintf("/%s/denoms/{%s}", types.ModuleName, RestParamDenomID), queryDenom(cliCtx, queryRoute)).Methods("GET")
+	r.HandleFunc(fmt.Sprintf("/%s/collections/{%s}", types.ModuleName, RestParamClassID), queryCollection(cliCtx, queryRoute)).Methods("GET")
+	// Query all classes
+	r.HandleFunc(fmt.Sprintf("/%s/classes", types.ModuleName), queryClasses(cliCtx, queryRoute)).Methods("GET")
+	// Query the class
+	r.HandleFunc(fmt.Sprintf("/%s/classes/{%s}", types.ModuleName, RestParamClassID), queryClass(cliCtx, queryRoute)).Methods("GET")
 	// Query a single NFT
-	r.HandleFunc(fmt.Sprintf("/%s/nfts/{%s}/{%s}", types.ModuleName, RestParamDenomID, RestParamTokenID), queryNFT(cliCtx, queryRoute)).Methods("GET")
+	r.HandleFunc(fmt.Sprintf("/%s/nfts/{%s}/{%s}", types.ModuleName, RestParamClassID, RestParamTokenID), queryNFT(cliCtx, queryRoute)).Methods("GET")
 }
 
 func querySupply(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		denomID := mux.Vars(r)[RestParamDenomID]
-		err := types.ValidateDenomID(denomID)
+		classID := mux.Vars(r)[RestParamClassID]
+		err := types.ValidateClassID(classID)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 		}
@@ -45,7 +45,7 @@ func querySupply(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 				return
 			}
 		}
-		params := types.NewQuerySupplyParams(denomID, owner)
+		params := types.NewQuerySupplyParams(classID, owner)
 		bz, err := cliCtx.LegacyAmino.MarshalJSON(params)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
@@ -84,8 +84,8 @@ func queryOwner(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 			return
 		}
 
-		denomID := r.FormValue(RestParamDenomID)
-		params := types.NewQueryOwnerParams(denomID, address)
+		classID := r.FormValue(RestParamClassID)
+		params := types.NewQueryOwnerParams(classID, address)
 		bz, err := cliCtx.LegacyAmino.MarshalJSON(params)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
@@ -112,12 +112,12 @@ func queryOwner(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 
 func queryCollection(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		denomID := mux.Vars(r)[RestParamDenomID]
-		if err := types.ValidateDenomID(denomID); err != nil {
+		classID := mux.Vars(r)[RestParamClassID]
+		if err := types.ValidateClassID(classID); err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 		}
 
-		params := types.NewQueryCollectionParams(denomID)
+		params := types.NewQueryCollectionParams(classID)
 		bz, err := cliCtx.LegacyAmino.MarshalJSON(params)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
@@ -142,19 +142,19 @@ func queryCollection(cliCtx client.Context, queryRoute string) http.HandlerFunc 
 	}
 }
 
-func queryDenom(cliCtx client.Context, queryRoute string) http.HandlerFunc {
+func queryClass(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		cliCtx, ok := rest.ParseQueryHeightOrReturnBadRequest(w, cliCtx, r)
 		if !ok {
 			return
 		}
 
-		denomID := mux.Vars(r)[RestParamDenomID]
-		if err := types.ValidateDenomID(denomID); err != nil {
+		classID := mux.Vars(r)[RestParamClassID]
+		if err := types.ValidateClassID(classID); err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 		}
 
-		params := types.NewQueryDenomParams(denomID)
+		params := types.NewQueryClassParams(classID)
 		bz, err := cliCtx.LegacyAmino.MarshalJSON(params)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
@@ -162,7 +162,7 @@ func queryDenom(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 		}
 
 		res, height, err := cliCtx.QueryWithData(
-			fmt.Sprintf("custom/%s/%s", queryRoute, types.QueryDenom), bz,
+			fmt.Sprintf("custom/%s/%s", queryRoute, types.QueryClass), bz,
 		)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
@@ -174,7 +174,7 @@ func queryDenom(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 	}
 }
 
-func queryDenoms(cliCtx client.Context, queryRoute string) http.HandlerFunc {
+func queryClasses(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		cliCtx, ok := rest.ParseQueryHeightOrReturnBadRequest(w, cliCtx, r)
 		if !ok {
@@ -182,7 +182,7 @@ func queryDenoms(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 		}
 
 		res, height, err := cliCtx.QueryWithData(
-			fmt.Sprintf("custom/%s/%s", queryRoute, types.QueryDenoms), nil,
+			fmt.Sprintf("custom/%s/%s", queryRoute, types.QueryClasses), nil,
 		)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
@@ -198,8 +198,8 @@ func queryNFT(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 
-		denomID := vars[RestParamDenomID]
-		if err := types.ValidateDenomID(denomID); err != nil {
+		classID := vars[RestParamClassID]
+		if err := types.ValidateClassID(classID); err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 		}
 
@@ -208,7 +208,7 @@ func queryNFT(cliCtx client.Context, queryRoute string) http.HandlerFunc {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 		}
 
-		params := types.NewQueryNFTParams(denomID, tokenID)
+		params := types.NewQueryNFTParams(classID, tokenID)
 		bz, err := cliCtx.LegacyAmino.MarshalJSON(params)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())

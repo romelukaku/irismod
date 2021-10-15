@@ -14,19 +14,19 @@ import (
 )
 
 // MsgRedelegateExec creates a redelegate message.
-func IssueDenomExec(clientCtx client.Context, from string, denom string, extraArgs ...string) (testutil.BufferWriter, error) {
+func IssueClassExec(clientCtx client.Context, from string, class string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denom,
+		class,
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, from),
 	}
 	args = append(args, extraArgs...)
 
-	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdIssueDenom(), args)
+	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdIssueClass(), args)
 }
 
-func BurnNFTExec(clientCtx client.Context, from string, denomID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func BurnNFTExec(clientCtx client.Context, from string, classID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denomID,
+		classID,
 		tokenID,
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, from),
 	}
@@ -35,9 +35,9 @@ func BurnNFTExec(clientCtx client.Context, from string, denomID string, tokenID 
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdBurnNFT(), args)
 }
 
-func MintNFTExec(clientCtx client.Context, from string, denomID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func MintNFTExec(clientCtx client.Context, from string, classID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denomID,
+		classID,
 		tokenID,
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, from),
 	}
@@ -46,9 +46,9 @@ func MintNFTExec(clientCtx client.Context, from string, denomID string, tokenID 
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdMintNFT(), args)
 }
 
-func EditNFTExec(clientCtx client.Context, from string, denomID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func EditNFTExec(clientCtx client.Context, from string, classID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denomID,
+		classID,
 		tokenID,
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, from),
 	}
@@ -57,10 +57,10 @@ func EditNFTExec(clientCtx client.Context, from string, denomID string, tokenID 
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdEditNFT(), args)
 }
 
-func TransferNFTExec(clientCtx client.Context, from string, recipient string, denomID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func TransferNFTExec(clientCtx client.Context, from string, recipient string, classID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
 		recipient,
-		denomID,
+		classID,
 		tokenID,
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, from),
 	}
@@ -69,19 +69,19 @@ func TransferNFTExec(clientCtx client.Context, from string, recipient string, de
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdTransferNFT(), args)
 }
 
-func QueryDenomExec(clientCtx client.Context, denomID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func QueryClassExec(clientCtx client.Context, classID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denomID,
+		classID,
 		fmt.Sprintf("--%s=json", cli.OutputFlag),
 	}
 	args = append(args, extraArgs...)
 
-	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryDenom(), args)
+	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryClass(), args)
 }
 
-func QueryCollectionExec(clientCtx client.Context, denomID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func QueryCollectionExec(clientCtx client.Context, classID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denomID,
+		classID,
 		fmt.Sprintf("--%s=json", cli.OutputFlag),
 	}
 	args = append(args, extraArgs...)
@@ -89,18 +89,18 @@ func QueryCollectionExec(clientCtx client.Context, denomID string, extraArgs ...
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryCollection(), args)
 }
 
-func QueryDenomsExec(clientCtx client.Context, extraArgs ...string) (testutil.BufferWriter, error) {
+func QueryClassesExec(clientCtx client.Context, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
 		fmt.Sprintf("--%s=json", cli.OutputFlag),
 	}
 	args = append(args, extraArgs...)
 
-	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryDenoms(), args)
+	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryClasses(), args)
 }
 
-func QuerySupplyExec(clientCtx client.Context, denom string, extraArgs ...string) (testutil.BufferWriter, error) {
+func QuerySupplyExec(clientCtx client.Context, class string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denom,
+		class,
 		fmt.Sprintf("--%s=json", cli.OutputFlag),
 	}
 	args = append(args, extraArgs...)
@@ -118,9 +118,9 @@ func QueryOwnerExec(clientCtx client.Context, address string, extraArgs ...strin
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryOwner(), args)
 }
 
-func QueryNFTExec(clientCtx client.Context, denomID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func QueryNFTExec(clientCtx client.Context, classID string, tokenID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
-		denomID,
+		classID,
 		tokenID,
 		fmt.Sprintf("--%s=json", cli.OutputFlag),
 	}
@@ -129,13 +129,13 @@ func QueryNFTExec(clientCtx client.Context, denomID string, tokenID string, extr
 	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdQueryNFT(), args)
 }
 
-func TransferDenomExec(clientCtx client.Context, from string, recipient string, denomID string, extraArgs ...string) (testutil.BufferWriter, error) {
+func TransferClassExec(clientCtx client.Context, from string, recipient string, classID string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
 		recipient,
-		denomID,
+		classID,
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, from),
 	}
 
 	args = append(args, extraArgs...)
-	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdTransferDenom(), args)
+	return clitestutil.ExecTestCLICmd(clientCtx, nftcli.GetCmdTransferClass(), args)
 }

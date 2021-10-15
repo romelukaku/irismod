@@ -1,25 +1,33 @@
 syntax = "proto3";
-package irismod.nft;
+package cosmos.nft.v1beta1;
 
 import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
 
-option go_package = "github.com/irisnet/irismod/modules/nft/types";
-option (gogoproto.goproto_getters_all) = false;
+option go_package = "github.com/cosmos/cosmos-sdk/x/nft";
 
 // BaseNFT defines a non-fungible token
-message BaseNFT {
-    option (gogoproto.equal) = true;
+message NFT {
+    // class_id defines the unique identifier of the NFT classification, similar to the contract address of ERC721
+    string class_id = 1;
 
-    string id = 1;
-    string name = 2;
-    string uri = 3 [ (gogoproto.customname) = "URI" ];
-    string data = 4;
-    string owner = 5;
+    // id defines the unique identification of NFT
+    string id = 2;
+
+    // uri defines NFT's metadata storage address outside the chain
+    string uri = 3;
+
+    // uri_hash is a hash of the document pointed to uri
+    string uri_hash = 4;
+
+    // data is the metadata of the NFT
+    google.protobuf.Any data = 10;
 }
 
-// Denom defines a type of NFT
-message Denom {
+// Class defines a type of NFT
+message Class {
     option (gogoproto.equal) = true;
+    option (gogoproto.goproto_getters_all) = false;
 
     string id = 1;
     string name = 2;
@@ -50,6 +58,6 @@ message Owner {
 message Collection {
     option (gogoproto.equal) = true;
 
-    Denom denom = 1 [ (gogoproto.nullable) = false ];
+    Class denom = 1 [ (gogoproto.nullable) = false ];
     repeated BaseNFT nfts = 2 [ (gogoproto.customname) = "NFTs", (gogoproto.nullable) = false ];
 }

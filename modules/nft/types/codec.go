@@ -27,31 +27,31 @@ func init() {
 
 // RegisterLegacyAminoCodec concrete types on codec
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&MsgIssueDenom{}, "irismod/nft/MsgIssueDenom", nil)
+	cdc.RegisterConcrete(&MsgIssueClass{}, "irismod/nft/MsgIssueClass", nil)
 	cdc.RegisterConcrete(&MsgTransferNFT{}, "irismod/nft/MsgTransferNFT", nil)
 	cdc.RegisterConcrete(&MsgEditNFT{}, "irismod/nft/MsgEditNFT", nil)
 	cdc.RegisterConcrete(&MsgMintNFT{}, "irismod/nft/MsgMintNFT", nil)
 	cdc.RegisterConcrete(&MsgBurnNFT{}, "irismod/nft/MsgBurnNFT", nil)
-	cdc.RegisterConcrete(&MsgTransferDenom{}, "irismod/nft/MsgTransferDenom", nil)
+	cdc.RegisterConcrete(&MsgTransferClass{}, "irismod/nft/MsgTransferClass", nil)
 
 	cdc.RegisterInterface((*exported.NFT)(nil), nil)
-	cdc.RegisterConcrete(&BaseNFT{}, "irismod/nft/BaseNFT", nil)
+	cdc.RegisterConcrete(&NFT{}, "irismod/nft/NFT", nil)
 }
 
 func RegisterInterfaces(registry types.InterfaceRegistry) {
 	registry.RegisterImplementations(
 		(*sdk.Msg)(nil),
-		&MsgIssueDenom{},
+		&MsgIssueClass{},
 		&MsgTransferNFT{},
 		&MsgEditNFT{},
 		&MsgMintNFT{},
 		&MsgBurnNFT{},
-		&MsgTransferDenom{},
+		&MsgTransferClass{},
 	)
 
 	registry.RegisterImplementations(
 		(*exported.NFT)(nil),
-		&BaseNFT{},
+		&NFT{},
 	)
 
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)

@@ -61,17 +61,17 @@ func (s *IntegrationTestSuite) TestNft() {
 	tokenData := "data"
 	tokenID := "kitty"
 	//owner     := "owner"
-	denomName := "name"
-	denom := "denom"
+	className := "name"
+	class := "class"
 	schema := "schema"
 	symbol := "symbol"
 	mintRestricted := true
 	updateRestricted := false
 	baseURL := val.APIAddress
 
-	//------test GetCmdIssueDenom()-------------
+	//------test GetCmdIssueClass()-------------
 	args := []string{
-		fmt.Sprintf("--%s=%s", nftcli.FlagDenomName, denomName),
+		fmt.Sprintf("--%s=%s", nftcli.FlagClassName, className),
 		fmt.Sprintf("--%s=%s", nftcli.FlagSymbol, symbol),
 		fmt.Sprintf("--%s=%s", nftcli.FlagSchema, schema),
 		fmt.Sprintf("--%s=%t", nftcli.FlagMintRestricted, mintRestricted),
@@ -85,36 +85,36 @@ func (s *IntegrationTestSuite) TestNft() {
 	respType := proto.Message(&sdk.TxResponse{})
 	expectedCode := uint32(0)
 
-	bz, err := nfttestutil.IssueDenomExec(val.ClientCtx, from.String(), denom, args...)
+	bz, err := nfttestutil.IssueClassExec(val.ClientCtx, from.String(), class, args...)
 	s.Require().NoError(err)
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(bz.Bytes(), respType), bz.String())
 	txResp := respType.(*sdk.TxResponse)
 	s.Require().Equal(expectedCode, txResp.Code)
 
-	denomID := gjson.Get(txResp.RawLog, "0.events.0.attributes.0.value").String()
+	classID := gjson.Get(txResp.RawLog, "0.events.0.attributes.0.value").String()
 
-	//------test GetCmdQueryDenom()-------------
-	url := fmt.Sprintf("%s/irismod/nft/denoms/%s", baseURL, denomID)
+	//------test GetCmdQueryClass()-------------
+	url := fmt.Sprintf("%s/irismod/nft/classes/%s", baseURL, classID)
 	resp, err := rest.GetRequest(url)
-	respType = proto.Message(&nfttypes.QueryDenomResponse{})
+	respType = proto.Message(&nfttypes.QueryClassResponse{})
 	s.Require().NoError(err)
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(resp, respType))
-	denomItem := respType.(*nfttypes.QueryDenomResponse)
-	s.Require().Equal(denomName, denomItem.Denom.Name)
-	s.Require().Equal(schema, denomItem.Denom.Schema)
-	s.Require().Equal(symbol, denomItem.Denom.Symbol)
-	s.Require().Equal(mintRestricted, denomItem.Denom.MintRestricted)
-	s.Require().Equal(updateRestricted, denomItem.Denom.UpdateRestricted)
+	classItem := respType.(*nfttypes.QueryClassResponse)
+	s.Require().Equal(className, classItem.Class.Name)
+	s.Require().Equal(schema, classItem.Class.Schema)
+	s.Require().Equal(symbol, classItem.Class.Symbol)
+	s.Require().Equal(mintRestricted, classItem.Class.MintRestricted)
+	s.Require().Equal(updateRestricted, classItem.Class.UpdateRestricted)
 
-	//------test GetCmdQueryDenoms()-------------
-	url = fmt.Sprintf("%s/irismod/nft/denoms", baseURL)
+	//------test GetCmdQueryClasses()-------------
+	url = fmt.Sprintf("%s/irismod/nft/classes", baseURL)
 	resp, err = rest.GetRequest(url)
-	respType = proto.Message(&nfttypes.QueryDenomsResponse{})
+	respType = proto.Message(&nfttypes.QueryClassesResponse{})
 	s.Require().NoError(err)
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(resp, respType))
-	denomsResp := respType.(*nfttypes.QueryDenomsResponse)
-	s.Require().Equal(1, len(denomsResp.Denoms))
-	s.Require().Equal(denomID, denomsResp.Denoms[0].Id)
+	classesResp := respType.(*nfttypes.QueryClassesResponse)
+	s.Require().Equal(1, len(classesResp.Classes))
+	s.Require().Equal(classID, classesResp.Classes[0].Id)
 
 	//------test GetCmdMintNFT()-------------
 	args = []string{
@@ -130,14 +130,14 @@ func (s *IntegrationTestSuite) TestNft() {
 
 	respType = proto.Message(&sdk.TxResponse{})
 
-	bz, err = nfttestutil.MintNFTExec(val.ClientCtx, from.String(), denomID, tokenID, args...)
+	bz, err = nfttestutil.MintNFTExec(val.ClientCtx, from.String(), classID, tokenID, args...)
 	s.Require().NoError(err)
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(bz.Bytes(), respType), bz.String())
 	txResp = respType.(*sdk.TxResponse)
 	s.Require().Equal(expectedCode, txResp.Code)
 
 	//------test GetCmdQuerySupply()-------------
-	url = fmt.Sprintf("%s/irismod/nft/collections/%s/supply", baseURL, denomID)
+	url = fmt.Sprintf("%s/irismod/nft/collections/%s/supply", baseURL, classID)
 	resp, err = rest.GetRequest(url)
 	respType = proto.Message(&nfttypes.QuerySupplyResponse{})
 	s.Require().NoError(err)
@@ -146,7 +146,7 @@ func (s *IntegrationTestSuite) TestNft() {
 	s.Require().Equal(uint64(1), supplyResp.Amount)
 
 	//------test GetCmdQueryNFT()-------------
-	url = fmt.Sprintf("%s/irismod/nft/nfts/%s/%s", baseURL, denomID, tokenID)
+	url = fmt.Sprintf("%s/irismod/nft/nfts/%s/%s", baseURL, classID, tokenID)
 	resp, err = rest.GetRequest(url)
 	respType = proto.Message(&nfttypes.QueryNFTResponse{})
 	s.Require().NoError(err)
@@ -166,11 +166,11 @@ func (s *IntegrationTestSuite) TestNft() {
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(resp, respType))
 	ownerResp := respType.(*nfttypes.QueryOwnerResponse)
 	s.Require().Equal(from.String(), ownerResp.Owner.Address)
-	s.Require().Equal(denom, ownerResp.Owner.IDCollections[0].DenomId)
+	s.Require().Equal(class, ownerResp.Owner.IDCollections[0].ClassId)
 	s.Require().Equal(tokenID, ownerResp.Owner.IDCollections[0].TokenIds[0])
 
 	//------test GetCmdQueryCollection()-------------
-	url = fmt.Sprintf("%s/irismod/nft/collections/%s", baseURL, denomID)
+	url = fmt.Sprintf("%s/irismod/nft/collections/%s", baseURL, classID)
 	resp, err = rest.GetRequest(url)
 	respType = proto.Message(&nfttypes.QueryCollectionResponse{})
 	s.Require().NoError(err)
@@ -178,7 +178,7 @@ func (s *IntegrationTestSuite) TestNft() {
 	collectionResp := respType.(*nfttypes.QueryCollectionResponse)
 	s.Require().Equal(1, len(collectionResp.Collection.NFTs))
 
-	//------test GetCmdTransferDenom()-------------
+	//------test GetCmdTransferClass()-------------
 	args = []string{
 		fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
@@ -187,21 +187,21 @@ func (s *IntegrationTestSuite) TestNft() {
 
 	respType = proto.Message(&sdk.TxResponse{})
 
-	bz, err = nfttestutil.TransferDenomExec(val.ClientCtx, from.String(), recipient.String(), denomID, args...)
+	bz, err = nfttestutil.TransferClassExec(val.ClientCtx, from.String(), recipient.String(), classID, args...)
 	s.Require().NoError(err)
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(bz.Bytes(), respType), bz.String())
 	txResp = respType.(*sdk.TxResponse)
 	s.Require().Equal(expectedCode, txResp.Code)
 
-	respType = proto.Message(&nfttypes.Denom{})
-	bz, err = nfttestutil.QueryDenomExec(val.ClientCtx, denomID)
+	respType = proto.Message(&nfttypes.Class{})
+	bz, err = nfttestutil.QueryClassExec(val.ClientCtx, classID)
 	s.Require().NoError(err)
 	s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(bz.Bytes(), respType))
-	denomItem2 := respType.(*nfttypes.Denom)
-	s.Require().Equal(recipient.String(), denomItem2.Creator)
-	s.Require().Equal(denomName, denomItem2.Name)
-	s.Require().Equal(schema, denomItem2.Schema)
-	s.Require().Equal(symbol, denomItem2.Symbol)
-	s.Require().Equal(mintRestricted, denomItem2.MintRestricted)
-	s.Require().Equal(updateRestricted, denomItem2.UpdateRestricted)
+	classItem2 := respType.(*nfttypes.Class)
+	s.Require().Equal(recipient.String(), classItem2.Creator)
+	s.Require().Equal(className, classItem2.Name)
+	s.Require().Equal(schema, classItem2.Schema)
+	s.Require().Equal(symbol, classItem2.Symbol)
+	s.Require().Equal(mintRestricted, classItem2.MintRestricted)
+	s.Require().Equal(updateRestricted, classItem2.UpdateRestricted)
 }

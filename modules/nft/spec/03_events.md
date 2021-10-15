@@ -4,13 +4,13 @@ The nft module emits the following events:
 
 ## Handlers
 
-### MsgIssueDenom
+### MsgIssueClass
 
 | Type        | Attribute Key | Attribute Value  |
 | :---------- | :------------ | :--------------- |
-| issue_denom | denom_id      | {nftDenomID}     |
-| issue_denom | denom_name    | {nftDenomName}   |
-| issue_denom | creator       | {creatorAddress} |
+| issue_class | class_id      | {nftClassID}     |
+| issue_class | class_name    | {nftClassName}   |
+| issue_class | creator       | {creatorAddress} |
 | message     | module        | nft              |
 | message     | sender        | {senderAddress}  |
 
@@ -19,7 +19,7 @@ The nft module emits the following events:
 | Type         | Attribute Key | Attribute Value    |
 | :----------- | :------------ | :----------------- |
 | transfer_nft | token_id      | {tokenID}          |
-| transfer_nft | denom_id      | {nftDenomID}       |
+| transfer_nft | class_id      | {nftClassID}       |
 | transfer_nft | sender        | {senderAddress}    |
 | transfer_nft | recipient     | {recipientAddress} |
 | message      | module        | nft                |
@@ -30,7 +30,7 @@ The nft module emits the following events:
 | Type     | Attribute Key | Attribute Value |
 | :------- | :------------ | :-------------- |
 | edit_nft | token_id      | {tokenID}       |
-| edit_nft | denom_id      | {nftDenomID}    |
+| edit_nft | class_id      | {nftClassID}    |
 | edit_nft | token_uri     | {tokenURI}      |
 | edit_nft | owner         | {ownerAddress}  |
 | message  | module        | nft             |
@@ -41,7 +41,7 @@ The nft module emits the following events:
 | Type     | Attribute Key | Attribute Value    |
 | :------- | :------------ | :----------------- |
 | mint_nft | token_id      | {tokenID}          |
-| mint_nft | denom_id      | {nftDenomID}       |
+| mint_nft | class_id      | {nftClassID}       |
 | mint_nft | token_uri     | {tokenURI}         |
 | mint_nft | recipient     | {recipientAddress} |
 | message  | module        | nft                |
@@ -51,18 +51,18 @@ The nft module emits the following events:
 
 | Type     | Attribute Key | Attribute Value |
 | :------- | :------------ | :-------------- |
-| burn_nft | denom_id      | {nftDenomID}    |
+| burn_nft | class_id      | {nftClassID}    |
 | burn_nft | token_id      | {tokenID}       |
 | burn_nft | owner         | {ownerAddress}  |
 | message  | module        | nft             |
 | message  | sender        | {senderAddress} |
 
-### MsgTransferDenom
+### MsgTransferClass
 
 | Type         | Attribute Key | Attribute Value    |
 | :----------- | :------------ | :----------------- |
-| transfer_denom | denom_id      | {nftDenomID}       |
-| transfer_denom | sender        | {senderAddress}    |
-| transfer_denom | recipient     | {recipientAddress} |
+| transfer_class | class_id      | {nftClassID}       |
+| transfer_class | sender        | {senderAddress}    |
+| transfer_class | recipient     | {recipientAddress} |
 | message      | module        | nft                |
 | message      | sender        | {senderAddress}    |

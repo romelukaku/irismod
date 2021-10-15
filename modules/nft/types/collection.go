@@ -5,16 +5,16 @@ import (
 )
 
 // NewCollection creates a new NFT Collection
-func NewCollection(denom Denom, nfts []exported.NFT) (c Collection) {
-	c.Denom = denom
+func NewCollection(class Class, nfts []exported.NFT) (c Collection) {
+	c.Class = class
 	for _, nft := range nfts {
-		c = c.AddNFT(nft.(BaseNFT))
+		c = c.AddNFT(nft.(NFT))
 	}
 	return c
 }
 
 // AddNFT adds an NFT to the collection
-func (c Collection) AddNFT(nft BaseNFT) Collection {
+func (c Collection) AddNFT(nft NFT) Collection {
 	c.NFTs = append(c.NFTs, nft)
 	return c
 }

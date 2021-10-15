@@ -1,21 +1,21 @@
 # Messages
 
-## MsgIssueDenom
+## MsgIssueClass
 
 This message defines a type of nft, there can be multiple nft of the same type
 
 | **Field** | **Type** | **Description**                                                                                                                  |
 | :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| Id      | `string`     | The denomination ID of the NFT, necessary as multiple denominations are able to be represented on each chain.                    |
-| Name      | `string` | The denomination name of the NFT, necessary as multiple denominations are able to be represented on each chain.                  |
+| Id      | `string`     | The classination ID of the NFT, necessary as multiple classinations are able to be represented on each chain.                    |
+| Name      | `string` | The classination name of the NFT, necessary as multiple classinations are able to be represented on each chain.                  |
 | Sender    | `string` | The account address of the user sending the NFT. By default it is __not__ required that the sender is also the owner of the NFT. |
 | Schema    | `string` | NFT specifications defined under this category                                                                                   |
 | Symbol    | `string` | The abbreviated name of a specific NFT type                                                                                 |
-| MintRestricted    | `bool` | MintRestricted is true means that only Denom owners can issue NFTs under this category, false means anyone can         |                                                                        |
+| MintRestricted    | `bool` | MintRestricted is true means that only Class owners can issue NFTs under this category, false means anyone can         |                                                                        |
 | UpdateRestricted    | `bool` | UpdateRestricted is true means that no one in this category can update the NFT, false means that only the owner of this NFT can update   |                                                                             |
 
 ```go
-type MsgIssueDenom struct {
+type MsgIssueClass struct {
     Id     string
     Name   string
     Schema string
@@ -33,7 +33,7 @@ This is the most commonly expected MsgType to be supported across chains. While 
 | **Field** | **Type** | **Description**                                                                                                                  |
 | :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------- |
 | ID        | `string` | The unique ID of the NFT being transferred.                                                                                      |
-| DenomId   | `string` | The unique ID of the denomination, necessary as multiple denominations are able to be represented on each chain.                 |
+| ClassId   | `string` | The unique ID of the classination, necessary as multiple classinations are able to be represented on each chain.                 |
 | Name      | `string` | The name of the NFT being transferred.                                                                                           |
 | URI       | `string` | The URI pointing to a JSON object that contains subsequent tokenData information off-chain                                       |
 | Data      | `string` | The data of the NFT                                                                                                              |
@@ -44,7 +44,7 @@ This is the most commonly expected MsgType to be supported across chains. While 
 // MsgTransferNFT defines an SDK message for transferring an NFT to recipient.
 type MsgTransferNFT struct {
     Id        string
-    DenomId   string
+    ClassId   string
     Name      string
     URI       string
     Data      string
@@ -60,7 +60,7 @@ This message type allows the `TokenURI` to be updated. By default anyone can exe
 | **Field** | **Type** | **Description**                                                                                                  |
 | :-------- | :------- | :--------------------------------------------------------------------------------------------------------------- |
 | Id        | `string` | The unique ID of the NFT being edited.                                                                           |
-| DenomId   | `string` | The unique ID of the denomination, necessary as multiple denominations are able to be represented on each chain. |
+| ClassId   | `string` | The unique ID of the classination, necessary as multiple classinations are able to be represented on each chain. |
 | Name      | `string` | The name of the NFT being edited.                                                                                |
 | URI       | `string` | The URI pointing to a JSON object that contains subsequent tokenData information off-chain                       |
 | Data      | `string` | The data of the NFT                                                                                              |
@@ -70,7 +70,7 @@ This message type allows the `TokenURI` to be updated. By default anyone can exe
 // MsgEditNFT defines an SDK message for editing a nft.
 type MsgEditNFT struct {
     Id      string
-    DenomId string
+    ClassId string
     Name    string
     URI     string
     Data    string
@@ -80,12 +80,12 @@ type MsgEditNFT struct {
 
 ## MsgMintNFT
 
-This message type is used for minting new tokens. If a new `NFT` is minted under a new `Denom`, a new `Collection` will also be created, otherwise the `NFT` is added to the existing `Collection`. If a new `NFT` is minted by a new account, a new `Owner` is created, otherwise the `NFT` `ID` is added to the existing `Owner`'s `IDCollection`. By default anyone can execute this Message type. **It is highly recommended that a custom handler is made to restrict use of this Message type to prevent unintended use.**
+This message type is used for minting new tokens. If a new `NFT` is minted under a new `Class`, a new `Collection` will also be created, otherwise the `NFT` is added to the existing `Collection`. If a new `NFT` is minted by a new account, a new `Owner` is created, otherwise the `NFT` `ID` is added to the existing `Owner`'s `IDCollection`. By default anyone can execute this Message type. **It is highly recommended that a custom handler is made to restrict use of this Message type to prevent unintended use.**
 
 | **Field** | **Type** | **Description**                                                                            |
 | :-------- | :------- | :----------------------------------------------------------------------------------------- |
 | Id        | `string` | The unique ID of the NFT being minted                                                      |
-| DenomId   | `string` | The unique ID of the denomination.                                                         |
+| ClassId   | `string` | The unique ID of the classination.                                                         |
 | Name      | `string` | The name of the NFT being minted.                                                          |
 | URI       | `string` | The URI pointing to a JSON object that contains subsequent tokenData information off-chain |
 | Data      | `string` | The data of the NFT.                                                                       |
@@ -96,7 +96,7 @@ This message type is used for minting new tokens. If a new `NFT` is minted under
 // MsgMintNFT defines an SDK message for creating a new NFT.
 type MsgMintNFT struct {
     Id        string
-    DenomId   string
+    ClassId   string
     Name      string
     URI       string
     Data      string
@@ -112,30 +112,30 @@ This message type is used for burning tokens which destroys and deletes them. By
 | **Field** | **Type** | **Description**                                    |
 | :-------- | :------- | :------------------------------------------------- |
 | Id        | `string` | The ID of the Token.                               |
-| DenomId   | `string` | The Denom ID of the Token.                         |
+| ClassId   | `string` | The Class ID of the Token.                         |
 | Sender    | `string` | The account address of the user burning the token. |
 
 ```go
 // MsgBurnNFT defines an SDK message for burning a NFT.
 type MsgBurnNFT struct {
     Id      string
-    DenomId string
+    ClassId string
     Sender  string
 }
 ```
 
-## MsgTransferDenom
+## MsgTransferClass
 This message is used by the owner of the NFT classification to transfer the ownership of the NFT classification to others
 
 | **Field** | **Type** | **Description**                                                                                                                  |
 | :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| ID        | `string` | The unique ID of the Denom being transferred.                                                                                      | 
-| Sender    | `string` | The account address of the user sending the Denom. |
-| Recipient | `string` | The account address who will receive the Denom as a result of the transfer transaction.                                            |
+| ID        | `string` | The unique ID of the Class being transferred.                                                                                      | 
+| Sender    | `string` | The account address of the user sending the Class. |
+| Recipient | `string` | The account address who will receive the Class as a result of the transfer transaction.                                            |
 
 ```go
-// MsgTransferDenom defines an SDK message for transferring an Denom to recipient.
-type MsgTransferDenom struct {
+// MsgTransferClass defines an SDK message for transferring an Class to recipient.
+type MsgTransferClass struct {
     Id        string
     Sender    string
     Recipient string

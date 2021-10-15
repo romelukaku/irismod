@@ -11,78 +11,78 @@ const (
 	QuerySupply     = "supply"
 	QueryOwner      = "owner"
 	QueryCollection = "collection"
-	QueryDenoms     = "denoms"
-	QueryDenom      = "denom"
+	QueryClasses    = "classes"
+	QueryClass      = "class"
 	QueryNFT        = "nft"
 )
 
 // QuerySupplyParams defines the params for queries:
 type QuerySupplyParams struct {
-	Denom string
+	Class string
 	Owner sdk.AccAddress
 }
 
 // NewQuerySupplyParams creates a new instance of QuerySupplyParams
-func NewQuerySupplyParams(denom string, owner sdk.AccAddress) QuerySupplyParams {
+func NewQuerySupplyParams(class string, owner sdk.AccAddress) QuerySupplyParams {
 	return QuerySupplyParams{
-		Denom: denom,
+		Class: class,
 		Owner: owner,
 	}
 }
 
-// Bytes exports the Denom as bytes
+// Bytes exports the Class as bytes
 func (q QuerySupplyParams) Bytes() []byte {
-	return []byte(q.Denom)
+	return []byte(q.Class)
 }
 
 // QueryOwnerParams defines the params for queries:
 type QueryOwnerParams struct {
-	Denom string
+	Class string
 	Owner sdk.AccAddress
 }
 
 // NewQuerySupplyParams creates a new instance of QuerySupplyParams
-func NewQueryOwnerParams(denom string, owner sdk.AccAddress) QueryOwnerParams {
+func NewQueryOwnerParams(class string, owner sdk.AccAddress) QueryOwnerParams {
 	return QueryOwnerParams{
-		Denom: denom,
+		Class: class,
 		Owner: owner,
 	}
 }
 
 // QuerySupplyParams defines the params for queries:
 type QueryCollectionParams struct {
-	Denom string
+	Class string
 }
 
 // NewQueryCollectionParams creates a new instance of QueryCollectionParams
-func NewQueryCollectionParams(denom string) QueryCollectionParams {
+func NewQueryCollectionParams(class string) QueryCollectionParams {
 	return QueryCollectionParams{
-		Denom: denom,
+		Class: class,
 	}
 }
 
-// QueryDenomParams defines the params for queries:
-type QueryDenomParams struct {
+// QueryClassParams defines the params for queries:
+type QueryClassParams struct {
 	ID string
 }
 
-// NewQueryDenomParams creates a new instance of QueryDenomParams
-func NewQueryDenomParams(id string) QueryDenomParams {
-	return QueryDenomParams{
+// NewQueryClassParams creates a new instance of QueryClassParams
+func NewQueryClassParams(id string) QueryClassParams {
+	return QueryClassParams{
 		ID: id,
 	}
 }
 
 // QueryNFTParams params for query 'custom/nfts/nft'
 type QueryNFTParams struct {
-	Denom   string
+	Class   string
 	TokenID string
 }
 
 // NewQueryNFTParams creates a new instance of QueryNFTParams
-func NewQueryNFTParams(denom, id string) QueryNFTParams {
+func NewQueryNFTParams(class, id string) QueryNFTParams {
 	return QueryNFTParams{
-		Denom:   denom,
+		Class:   class,
 		TokenID: id,
 	}
 }

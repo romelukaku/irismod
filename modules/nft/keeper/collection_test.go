@@ -6,29 +6,29 @@ import (
 )
 
 func (suite *KeeperSuite) TestSetCollection() {
-	nft := types.NewBaseNFT(tokenID, tokenNm, address, tokenURI, tokenData)
+	nft := types.NewNFT(tokenID, tokenNm, address, tokenURI, tokenData)
 	// create a new NFT and add it to the collection created with the NFT mint
-	nft2 := types.NewBaseNFT(tokenID2, tokenNm, address, tokenURI, tokenData)
+	nft2 := types.NewNFT(tokenID2, tokenNm, address, tokenURI, tokenData)
 
-	denomE := types.Denom{
-		Id:               denomID,
-		Name:             denomNm,
+	classE := types.Class{
+		Id:               classID,
+		Name:             classNm,
 		Schema:           schema,
 		Creator:          address.String(),
-		Symbol:           denomSymbol,
+		Symbol:           classSymbol,
 		MintRestricted:   true,
 		UpdateRestricted: true,
 	}
 
 	collection2 := types.Collection{
-		Denom: denomE,
-		NFTs:  []types.BaseNFT{nft2, nft},
+		Class: classE,
+		NFTs:  []types.NFT{nft2, nft},
 	}
 
 	err := suite.keeper.SetCollection(suite.ctx, collection2)
 	suite.Nil(err)
 
-	collection2, err = suite.keeper.GetCollection(suite.ctx, denomID)
+	collection2, err = suite.keeper.GetCollection(suite.ctx, classID)
 	suite.NoError(err)
 	suite.Len(collection2.NFTs, 2)
 
@@ -38,11 +38,11 @@ func (suite *KeeperSuite) TestSetCollection() {
 
 func (suite *KeeperSuite) TestGetCollection() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	// collection should exist
-	collection, err := suite.keeper.GetCollection(suite.ctx, denomID)
+	collection, err := suite.keeper.GetCollection(suite.ctx, classID)
 	suite.NoError(err)
 	suite.NotEmpty(collection)
 
@@ -53,7 +53,7 @@ func (suite *KeeperSuite) TestGetCollection() {
 func (suite *KeeperSuite) TestGetCollections() {
 
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	msg, fail := keeper.SupplyInvariant(suite.keeper)(suite.ctx)
@@ -62,52 +62,52 @@ func (suite *KeeperSuite) TestGetCollections() {
 
 func (suite *KeeperSuite) TestGetSupply() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	// MintNFT shouldn't fail when collection does not exist
-	err = suite.keeper.MintNFT(suite.ctx, denomID, tokenID2, tokenNm2, tokenURI, tokenData, address2)
+	err = suite.keeper.MintNFT(suite.ctx, classID, tokenID2, tokenNm2, tokenURI, tokenData, address2)
 	suite.NoError(err)
 
 	// MintNFT shouldn't fail when collection does not exist
-	err = suite.keeper.MintNFT(suite.ctx, denomID2, tokenID, tokenNm2, tokenURI, tokenData, address2)
+	err = suite.keeper.MintNFT(suite.ctx, classID2, tokenID, tokenNm2, tokenURI, tokenData, address2)
 	suite.NoError(err)
 
-	supply := suite.keeper.GetTotalSupply(suite.ctx, denomID)
+	supply := suite.keeper.GetTotalSupply(suite.ctx, classID)
 	suite.Equal(uint64(2), supply)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID2)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID2)
 	suite.Equal(uint64(1), supply)
 
-	supply = suite.keeper.GetTotalSupplyOfOwner(suite.ctx, denomID, address)
+	supply = suite.keeper.GetTotalSupplyOfOwner(suite.ctx, classID, address)
 	suite.Equal(uint64(1), supply)
 
-	supply = suite.keeper.GetTotalSupplyOfOwner(suite.ctx, denomID, address2)
+	supply = suite.keeper.GetTotalSupplyOfOwner(suite.ctx, classID, address2)
 	suite.Equal(uint64(1), supply)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID)
 	suite.Equal(uint64(2), supply)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID2)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID2)
 	suite.Equal(uint64(1), supply)
 
 	//burn nft
-	err = suite.keeper.BurnNFT(suite.ctx, denomID, tokenID, address)
+	err = suite.keeper.BurnNFT(suite.ctx, classID, tokenID, address)
 	suite.NoError(err)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID)
 	suite.Equal(uint64(1), supply)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID)
 	suite.Equal(uint64(1), supply)
 
 	//burn nft
-	err = suite.keeper.BurnNFT(suite.ctx, denomID, tokenID2, address2)
+	err = suite.keeper.BurnNFT(suite.ctx, classID, tokenID2, address2)
 	suite.NoError(err)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID)
 	suite.Equal(uint64(0), supply)
 
-	supply = suite.keeper.GetTotalSupply(suite.ctx, denomID)
+	supply = suite.keeper.GetTotalSupply(suite.ctx, classID)
 	suite.Equal(uint64(0), supply)
 }

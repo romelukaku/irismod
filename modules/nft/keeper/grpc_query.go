@@ -21,14 +21,14 @@ func (k Keeper) Supply(c context.Context, request *types.QuerySupplyRequest) (*t
 
 	var supply uint64
 	switch {
-	case len(request.Owner) == 0 && len(request.DenomId) > 0:
-		supply = k.GetTotalSupply(ctx, request.DenomId)
+	case len(request.Owner) == 0 && len(request.ClassId) > 0:
+		supply = k.GetTotalSupply(ctx, request.ClassId)
 	default:
 		owner, err := sdk.AccAddressFromBech32(request.Owner)
 		if err != nil {
 			return nil, status.Errorf(codes.InvalidArgument, "invalid owner address %s", request.Owner)
 		}
-		supply = k.GetTotalSupplyOfOwner(ctx, request.DenomId, owner)
+		supply = k.GetTotalSupplyOfOwner(ctx, request.ClassId, owner)
 	}
 	return &types.QuerySupplyResponse{Amount: supply}, nil
 }
@@ -47,26 +47,26 @@ func (k Keeper) Owner(c context.Context, request *types.QueryOwnerRequest) (*typ
 	}
 	idsMap := make(map[string][]string)
 	store := ctx.KVStore(k.storeKey)
-	nftStore := prefix.NewStore(store, types.KeyOwner(ownerAddress, request.DenomId, ""))
+	nftStore := prefix.NewStore(store, types.KeyOwner(ownerAddress, request.ClassId, ""))
 	pageRes, err := query.Paginate(nftStore, request.Pagination, func(key []byte, value []byte) error {
-		denomID := request.DenomId
+		classID := request.ClassId
 		tokenID := string(key)
-		if len(request.DenomId) == 0 {
-			denomID, tokenID, _ = types.SplitKeyDenom(key)
+		if len(request.ClassId) == 0 {
+			classID, tokenID, _ = types.SplitKeyClass(key)
 		}
-		if ids, ok := idsMap[denomID]; ok {
-			idsMap[denomID] = append(ids, tokenID)
+		if ids, ok := idsMap[classID]; ok {
+			idsMap[classID] = append(ids, tokenID)
 		} else {
-			idsMap[denomID] = []string{tokenID}
+			idsMap[classID] = []string{tokenID}
 			owner.IDCollections = append(
 				owner.IDCollections,
-				types.IDCollection{DenomId: denomID},
+				types.IDCollection{ClassId: classID},
 			)
 		}
 		return nil
 	})
 	for i := 0; i < len(owner.IDCollections); i++ {
-		owner.IDCollections[i].TokenIds = idsMap[owner.IDCollections[i].DenomId]
+		owner.IDCollections[i].TokenIds = idsMap[owner.IDCollections[i].ClassId]
 	}
 	return &types.QueryOwnerResponse{Owner: &owner, Pagination: pageRes}, nil
 }
@@ -74,42 +74,42 @@ func (k Keeper) Owner(c context.Context, request *types.QueryOwnerRequest) (*typ
 func (k Keeper) Collection(c context.Context, request *types.QueryCollectionRequest) (*types.QueryCollectionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
 
-	collection, pageRes, err := k.GetPaginateCollection(ctx, request, request.DenomId)
+	collection, pageRes, err := k.GetPaginateCollection(ctx, request, request.ClassId)
 	if err != nil {
 		return nil, err
 	}
 	return &types.QueryCollectionResponse{Collection: &collection, Pagination: pageRes}, nil
 }
 
-func (k Keeper) Denom(c context.Context, request *types.QueryDenomRequest) (*types.QueryDenomResponse, error) {
+func (k Keeper) Class(c context.Context, request *types.QueryClassRequest) (*types.QueryClassResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
 
-	denomObject, found := k.GetDenom(ctx, request.DenomId)
+	classObject, found := k.GetClass(ctx, request.ClassId)
 	if !found {
-		return nil, sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", request.DenomId)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidClass, "class ID %s not exists", request.ClassId)
 	}
 
-	return &types.QueryDenomResponse{Denom: &denomObject}, nil
+	return &types.QueryClassResponse{Class: &classObject}, nil
 }
 
-func (k Keeper) Denoms(c context.Context, req *types.QueryDenomsRequest) (*types.QueryDenomsResponse, error) {
+func (k Keeper) Classes(c context.Context, req *types.QueryClassesRequest) (*types.QueryClassesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
 
-	var denoms []types.Denom
+	var classes []types.Class
 	store := ctx.KVStore(k.storeKey)
-	denomStore := prefix.NewStore(store, types.KeyDenomID(""))
-	pageRes, err := query.Paginate(denomStore, req.Pagination, func(key []byte, value []byte) error {
-		var denom types.Denom
-		k.cdc.MustUnmarshal(value, &denom)
-		denoms = append(denoms, denom)
+	classStore := prefix.NewStore(store, types.KeyClassID(""))
+	pageRes, err := query.Paginate(classStore, req.Pagination, func(key []byte, value []byte) error {
+		var class types.Class
+		k.cdc.MustUnmarshal(value, &class)
+		classes = append(classes, class)
 		return nil
 	})
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "paginate: %v", err)
 	}
 
-	return &types.QueryDenomsResponse{
-		Denoms:     denoms,
+	return &types.QueryClassesResponse{
+		Classes:    classes,
 		Pagination: pageRes,
 	}, nil
 }
@@ -117,15 +117,15 @@ func (k Keeper) Denoms(c context.Context, req *types.QueryDenomsRequest) (*types
 func (k Keeper) NFT(c context.Context, request *types.QueryNFTRequest) (*types.QueryNFTResponse, error) {
 	ctx := sdk.UnwrapSDKContext(c)
 
-	nft, err := k.GetNFT(ctx, request.DenomId, request.TokenId)
+	nft, err := k.GetNFT(ctx, request.ClassId, request.TokenId)
 	if err != nil {
-		return nil, sdkerrors.Wrapf(types.ErrUnknownNFT, "invalid NFT %s from collection %s", request.TokenId, request.DenomId)
+		return nil, sdkerrors.Wrapf(types.ErrUnknownNFT, "invalid NFT %s from collection %s", request.TokenId, request.ClassId)
 	}
 
-	baseNFT, ok := nft.(types.BaseNFT)
+	NFT, ok := nft.(types.NFT)
 	if !ok {
-		return nil, sdkerrors.Wrapf(types.ErrUnknownNFT, "invalid type NFT %s from collection %s", request.TokenId, request.DenomId)
+		return nil, sdkerrors.Wrapf(types.ErrUnknownNFT, "invalid type NFT %s from collection %s", request.TokenId, request.ClassId)
 	}
 
-	return &types.QueryNFTResponse{NFT: &baseNFT}, nil
+	return &types.QueryNFTResponse{NFT: &NFT}, nil
 }

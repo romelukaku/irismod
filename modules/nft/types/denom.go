@@ -4,9 +4,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// NewDenom return a new denom
-func NewDenom(id, name, schema, symbol string, creator sdk.AccAddress, mintRestricted, updateRestricted bool) Denom {
-	return Denom{
+// NewClass return a new class
+func NewClass(id, name, schema, symbol string, creator sdk.AccAddress, mintRestricted, updateRestricted bool) Class {
+	return Class{
 		Id:               id,
 		Name:             name,
 		Schema:           schema,

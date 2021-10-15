@@ -12,8 +12,8 @@ import (
 
 const (
 	DoNotModify = "[do-not-modify]"
-	MinDenomLen = 3
-	MaxDenomLen = 64
+	MinClassLen = 3
+	MaxClassLen = 64
 
 	MaxTokenURILen = 256
 
@@ -34,21 +34,21 @@ var (
 	regexpKeyword     = regexp.MustCompile(regexpKeywordsFmt).MatchString
 )
 
-// ValidateDenomID verifies whether the  parameters are legal
-func ValidateDenomID(denomID string) error {
-	if len(denomID) < MinDenomLen || len(denomID) > MaxDenomLen {
-		return sdkerrors.Wrapf(ErrInvalidDenom, "the length of denom(%s) only accepts value [%d, %d]", denomID, MinDenomLen, MaxDenomLen)
+// ValidateClassID verifies whether the  parameters are legal
+func ValidateClassID(classID string) error {
+	if len(classID) < MinClassLen || len(classID) > MaxClassLen {
+		return sdkerrors.Wrapf(ErrInvalidClass, "the length of class(%s) only accepts value [%d, %d]", classID, MinClassLen, MaxClassLen)
 	}
-	if !IsBeginWithAlpha(denomID) || !IsAlphaNumeric(denomID) {
-		return sdkerrors.Wrapf(ErrInvalidDenom, "the denom(%s) only accepts alphanumeric characters, and begin with an english letter", denomID)
+	if !IsBeginWithAlpha(classID) || !IsAlphaNumeric(classID) {
+		return sdkerrors.Wrapf(ErrInvalidClass, "the class(%s) only accepts alphanumeric characters, and begin with an english letter", classID)
 	}
-	return ValidateKeywords(denomID)
+	return ValidateKeywords(classID)
 }
 
 // ValidateTokenID verify that the tokenID is legal
 func ValidateTokenID(tokenID string) error {
-	if len(tokenID) < MinDenomLen || len(tokenID) > MaxDenomLen {
-		return sdkerrors.Wrapf(ErrInvalidTokenID, "the length of nft id(%s) only accepts value [%d, %d]", tokenID, MinDenomLen, MaxDenomLen)
+	if len(tokenID) < MinClassLen || len(tokenID) > MaxClassLen {
+		return sdkerrors.Wrapf(ErrInvalidTokenID, "the length of nft id(%s) only accepts value [%d, %d]", tokenID, MinClassLen, MaxClassLen)
 	}
 	if !IsBeginWithAlpha(tokenID) || !IsAlphaNumeric(tokenID) {
 		return sdkerrors.Wrapf(ErrInvalidTokenID, "nft id(%s) only accepts alphanumeric characters, and begin with an english letter", tokenID)
@@ -69,10 +69,10 @@ func Modified(target string) bool {
 	return target != types.DoNotModify
 }
 
-// ValidateKeywords checks if the given denomId begins with `DenomKeywords`
-func ValidateKeywords(denomId string) error {
-	if regexpKeyword(denomId) {
-		return sdkerrors.Wrapf(ErrInvalidDenom, "invalid denomId: %s, can not begin with keyword: (%s)", denomId, keywords)
+// ValidateKeywords checks if the given classId begins with `ClassKeywords`
+func ValidateKeywords(classId string) error {
+	if regexpKeyword(classId) {
+		return sdkerrors.Wrapf(ErrInvalidClass, "invalid classId: %s, can not begin with keyword: (%s)", classId, keywords)
 	}
 	return nil
 }

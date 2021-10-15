@@ -19,14 +19,14 @@ import (
 )
 
 var (
-	denomID     = "denomid"
-	denomNm     = "denomnm"
-	denomSymbol = "denomSymbol"
+	classID     = "classid"
+	classNm     = "classnm"
+	classSymbol = "classSymbol"
 	schema      = "{a:a,b:b}"
 
-	denomID2     = "denomid2"
-	denomNm2     = "denom2nm"
-	denomSymbol2 = "denomSymbol2"
+	classID2     = "classid2"
+	classNm2     = "class2nm"
+	classSymbol2 = "classSymbol2"
 
 	tokenID  = "tokenid"
 	tokenID2 = "tokenid2"
@@ -36,9 +36,9 @@ var (
 	tokenNm2 = "tokennm2"
 	tokenNm3 = "tokennm3"
 
-	denomID3     = "denomid3"
-	denomNm3     = "denom3nm"
-	denomSymbol3 = "denomSymbol3"
+	classID3     = "classid3"
+	classNm3     = "class3nm"
+	classSymbol3 = "classSymbol3"
 
 	address   = CreateTestAddrs(1)[0]
 	address2  = CreateTestAddrs(2)[1]
@@ -74,14 +74,14 @@ func (suite *KeeperSuite) SetupTest() {
 	types.RegisterQueryServer(queryHelper, app.NFTKeeper)
 	suite.queryClient = types.NewQueryClient(queryHelper)
 
-	err := suite.keeper.IssueDenom(suite.ctx, denomID, denomNm, schema, denomSymbol, address, false, false)
+	err := suite.keeper.IssueClass(suite.ctx, classID, classNm, schema, classSymbol, address, false, false)
 	suite.NoError(err)
 
 	// MintNFT shouldn't fail when collection does not exist
-	err = suite.keeper.IssueDenom(suite.ctx, denomID2, denomNm2, schema, denomSymbol2, address, false, false)
+	err = suite.keeper.IssueClass(suite.ctx, classID2, classNm2, schema, classSymbol2, address, false, false)
 	suite.NoError(err)
 
-	err = suite.keeper.IssueDenom(suite.ctx, denomID3, denomNm3, schema, denomSymbol3, address3, true, true)
+	err = suite.keeper.IssueClass(suite.ctx, classID3, classNm3, schema, classSymbol3, address3, true, true)
 	suite.NoError(err)
 
 	// collections should equal 3
@@ -96,107 +96,107 @@ func TestKeeperSuite(t *testing.T) {
 
 func (suite *KeeperSuite) TestMintNFT() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	// MintNFT shouldn't fail when collection exists
-	err = suite.keeper.MintNFT(suite.ctx, denomID, tokenID2, tokenNm2, tokenURI, tokenData, address)
+	err = suite.keeper.MintNFT(suite.ctx, classID, tokenID2, tokenNm2, tokenURI, tokenData, address)
 	suite.NoError(err)
 
-	// MintNFT should fail when owner not equal to denom owner
-	err = suite.keeper.MintNFT(suite.ctx, denomID3, tokenID3, tokenNm3, tokenURI, tokenData, address)
+	// MintNFT should fail when owner not equal to class owner
+	err = suite.keeper.MintNFT(suite.ctx, classID3, tokenID3, tokenNm3, tokenURI, tokenData, address)
 	suite.Error(err)
 
-	// MintNFT shouldn't fail when owner equal to denom owner
-	err = suite.keeper.MintNFT(suite.ctx, denomID3, tokenID3, tokenNm3, tokenURI, tokenData, address3)
+	// MintNFT shouldn't fail when owner equal to class owner
+	err = suite.keeper.MintNFT(suite.ctx, classID3, tokenID3, tokenNm3, tokenURI, tokenData, address3)
 	suite.NoError(err)
 
 }
 
 func (suite *KeeperSuite) TestUpdateNFT() {
 	// EditNFT should fail when NFT doesn't exists
-	err := suite.keeper.EditNFT(suite.ctx, denomID, tokenID, tokenNm3, tokenURI, tokenData, address)
+	err := suite.keeper.EditNFT(suite.ctx, classID, tokenID, tokenNm3, tokenURI, tokenData, address)
 	suite.Error(err)
 
 	// MintNFT shouldn't fail when collection does not exist
-	err = suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err = suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	// EditNFT should fail when NFT doesn't exists
-	err = suite.keeper.EditNFT(suite.ctx, denomID, tokenID2, tokenNm2, tokenURI, tokenData, address)
+	err = suite.keeper.EditNFT(suite.ctx, classID, tokenID2, tokenNm2, tokenURI, tokenData, address)
 	suite.Error(err)
 
 	// EditNFT shouldn't fail when NFT exists
-	err = suite.keeper.EditNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI2, tokenData, address)
+	err = suite.keeper.EditNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI2, tokenData, address)
 	suite.NoError(err)
 
 	// EditNFT should fail when NFT failed to authorize
-	err = suite.keeper.EditNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI2, tokenData, address2)
+	err = suite.keeper.EditNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI2, tokenData, address2)
 	suite.Error(err)
 
 	// GetNFT should get the NFT with new tokenURI
-	receivedNFT, err := suite.keeper.GetNFT(suite.ctx, denomID, tokenID)
+	receivedNFT, err := suite.keeper.GetNFT(suite.ctx, classID, tokenID)
 	suite.NoError(err)
 	suite.Equal(receivedNFT.GetURI(), tokenURI2)
 
 	// EditNFT shouldn't fail when NFT exists
-	err = suite.keeper.EditNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI2, tokenData, address2)
+	err = suite.keeper.EditNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI2, tokenData, address2)
 	suite.Error(err)
 
-	err = suite.keeper.MintNFT(suite.ctx, denomID3, denomID3, tokenID3, tokenURI, tokenData, address3)
+	err = suite.keeper.MintNFT(suite.ctx, classID3, classID3, tokenID3, tokenURI, tokenData, address3)
 	suite.NoError(err)
 
-	// EditNFT should fail if updateRestricted equal to true, nobody can update the NFT under this denom
-	err = suite.keeper.EditNFT(suite.ctx, denomID3, denomID3, tokenID3, tokenURI, tokenData, address3)
+	// EditNFT should fail if updateRestricted equal to true, nobody can update the NFT under this class
+	err = suite.keeper.EditNFT(suite.ctx, classID3, classID3, tokenID3, tokenURI, tokenData, address3)
 	suite.Error(err)
 }
 
 func (suite *KeeperSuite) TestTransferOwner() {
 
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	// invalid owner
-	err = suite.keeper.TransferOwner(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address2, address3)
+	err = suite.keeper.TransferOwner(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address2, address3)
 	suite.Error(err)
 
 	// right
-	err = suite.keeper.TransferOwner(suite.ctx, denomID, tokenID, tokenNm2, tokenURI2, tokenData, address, address2)
+	err = suite.keeper.TransferOwner(suite.ctx, classID, tokenID, tokenNm2, tokenURI2, tokenData, address, address2)
 	suite.NoError(err)
 
-	nft, err := suite.keeper.GetNFT(suite.ctx, denomID, tokenID)
+	nft, err := suite.keeper.GetNFT(suite.ctx, classID, tokenID)
 	suite.NoError(err)
 	suite.Equal(tokenURI2, nft.GetURI())
 }
 
-func (suite *KeeperSuite) TestTransferDenom() {
+func (suite *KeeperSuite) TestTransferClass() {
 
 	// invalid owner
-	err := suite.keeper.TransferDenomOwner(suite.ctx, denomID, address3, address)
+	err := suite.keeper.TransferClassOwner(suite.ctx, classID, address3, address)
 	suite.Error(err)
 
 	// right
-	err = suite.keeper.TransferDenomOwner(suite.ctx, denomID, address, address3)
+	err = suite.keeper.TransferClassOwner(suite.ctx, classID, address, address3)
 	suite.NoError(err)
 
-	denom, _ := suite.keeper.GetDenom(suite.ctx, denomID)
+	class, _ := suite.keeper.GetClass(suite.ctx, classID)
 
-	// denom.Creator should equal to address3 after transfer
-	suite.Equal(denom.Creator, address3.String())
+	// class.Creator should equal to address3 after transfer
+	suite.Equal(class.Creator, address3.String())
 }
 
 func (suite *KeeperSuite) TestBurnNFT() {
 	// MintNFT should not fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	// BurnNFT should fail when NFT doesn't exist but collection does exist
-	err = suite.keeper.BurnNFT(suite.ctx, denomID, tokenID, address)
+	err = suite.keeper.BurnNFT(suite.ctx, classID, tokenID, address)
 	suite.NoError(err)
 
 	// NFT should no longer exist
-	isNFT := suite.keeper.HasNFT(suite.ctx, denomID, tokenID)
+	isNFT := suite.keeper.HasNFT(suite.ctx, classID, tokenID)
 	suite.False(isNFT)
 
 	msg, fail := keeper.SupplyInvariant(suite.keeper)(suite.ctx)

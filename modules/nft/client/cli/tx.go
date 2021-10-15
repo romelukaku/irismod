@@ -27,27 +27,27 @@ func NewTxCmd() *cobra.Command {
 	}
 
 	txCmd.AddCommand(
-		GetCmdIssueDenom(),
+		GetCmdIssueClass(),
 		GetCmdMintNFT(),
 		GetCmdEditNFT(),
 		GetCmdTransferNFT(),
 		GetCmdBurnNFT(),
-		GetCmdTransferDenom(),
+		GetCmdTransferClass(),
 	)
 
 	return txCmd
 }
 
-// GetCmdIssueDenom is the CLI command for an IssueDenom transaction
-func GetCmdIssueDenom() *cobra.Command {
+// GetCmdIssueClass is the CLI command for an IssueClass transaction
+func GetCmdIssueClass() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "issue [denom-id]",
-		Long: "Issue a new denom.",
+		Use:  "issue [class-id]",
+		Long: "Issue a new class.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft issue <denom-id> "+
+			"$ %s tx nft issue <class-id> "+
 				"--from=<key-name> "+
-				"--name=<denom-name> "+
-				"--symbol=<denom-symbol> "+
+				"--name=<class-name> "+
+				"--symbol=<class-symbol> "+
 				"--mint-restricted=<mint-restricted> "+
 				"--update-restricted=<update-restricted> "+
 				"--schema=<schema-content or path to schema.json> "+
@@ -62,7 +62,7 @@ func GetCmdIssueDenom() *cobra.Command {
 				return err
 			}
 
-			denomName, err := cmd.Flags().GetString(FlagDenomName)
+			className, err := cmd.Flags().GetString(FlagClassName)
 			if err != nil {
 				return err
 			}
@@ -87,9 +87,9 @@ func GetCmdIssueDenom() *cobra.Command {
 				schema = string(optionsContent)
 			}
 
-			msg := types.NewMsgIssueDenom(
+			msg := types.NewMsgIssueClass(
 				args[0],
-				denomName,
+				className,
 				schema,
 				clientCtx.GetFromAddress().String(),
 				symbol,
@@ -102,7 +102,7 @@ func GetCmdIssueDenom() *cobra.Command {
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
-	cmd.Flags().AddFlagSet(FsIssueDenom)
+	cmd.Flags().AddFlagSet(FsIssueClass)
 	_ = cmd.MarkFlagRequired(FlagMintRestricted)
 	_ = cmd.MarkFlagRequired(FlagUpdateRestricted)
 	flags.AddTxFlagsToCmd(cmd)
@@ -113,10 +113,10 @@ func GetCmdIssueDenom() *cobra.Command {
 // GetCmdMintNFT is the CLI command for a MintNFT transaction
 func GetCmdMintNFT() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "mint [denom-id] [nft-id]",
+		Use:  "mint [class-id] [nft-id]",
 		Long: "Mint an NFT and set the owner to the recipient.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft mint <denom-id> <nft-id> "+
+			"$ %s tx nft mint <class-id> <nft-id> "+
 				"--uri=<uri> "+
 				"--recipient=<recipient> "+
 				"--from=<key-name> "+
@@ -184,10 +184,10 @@ func GetCmdMintNFT() *cobra.Command {
 // GetCmdEditNFT is the CLI command for sending an MsgEditNFT transaction
 func GetCmdEditNFT() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "edit [denom-id] [nft-id]",
+		Use:  "edit [class-id] [nft-id]",
 		Long: "Edit the token data of an NFT.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft edit <denom-id> <nft-id> "+
+			"$ %s tx nft edit <class-id> <nft-id> "+
 				"--uri=<uri> "+
 				"--from=<key-name> "+
 				"--chain-id=<chain-id> "+
@@ -236,10 +236,10 @@ func GetCmdEditNFT() *cobra.Command {
 // GetCmdTransferNFT is the CLI command for sending a TransferNFT transaction
 func GetCmdTransferNFT() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "transfer [recipient] [denom-id] [nft-id]",
+		Use:  "transfer [recipient] [class-id] [nft-id]",
 		Long: "Transfer an NFT to a recipient.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft transfer <recipient> <denom-id> <nft-id> "+
+			"$ %s tx nft transfer <recipient> <class-id> <nft-id> "+
 				"--uri=<uri> "+
 				"--from=<key-name> "+
 				"--chain-id=<chain-id> "+
@@ -293,10 +293,10 @@ func GetCmdTransferNFT() *cobra.Command {
 // GetCmdBurnNFT is the CLI command for sending a BurnNFT transaction
 func GetCmdBurnNFT() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "burn [denom-id] [nft-id]",
+		Use:  "burn [class-id] [nft-id]",
 		Long: "Burn an NFT.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft burn <denom-id> <nft-id> "+
+			"$ %s tx nft burn <class-id> <nft-id> "+
 				"--from=<key-name> "+
 				"--chain-id=<chain-id> "+
 				"--fees=<fee>",
@@ -325,13 +325,13 @@ func GetCmdBurnNFT() *cobra.Command {
 	return cmd
 }
 
-// GetCmdTransferDenom is the CLI command for sending a TransferDenom transaction
-func GetCmdTransferDenom() *cobra.Command {
+// GetCmdTransferClass is the CLI command for sending a TransferClass transaction
+func GetCmdTransferClass() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "transfer-denom [recipient] [denom-id]",
-		Long: "Transfer an Denom to a recipient.",
+		Use:  "transfer-class [recipient] [class-id]",
+		Long: "Transfer an Class to a recipient.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft transfer-denom <recipient> <denom-id> "+
+			"$ %s tx nft transfer-class <recipient> <class-id> "+
 				"--from=<key-name> "+
 				"--chain-id=<chain-id> "+
 				"--fees=<fee>",
@@ -348,7 +348,7 @@ func GetCmdTransferDenom() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgTransferDenom(
+			msg := types.NewMsgTransferClass(
 				args[1],
 				clientCtx.GetFromAddress().String(),
 				args[0],
@@ -359,7 +359,7 @@ func GetCmdTransferDenom() *cobra.Command {
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
-	cmd.Flags().AddFlagSet(FsTransferDenom)
+	cmd.Flags().AddFlagSet(FsTransferClass)
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd

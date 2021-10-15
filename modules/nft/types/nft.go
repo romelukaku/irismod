@@ -6,11 +6,11 @@ import (
 	"github.com/irisnet/irismod/modules/nft/exported"
 )
 
-var _ exported.NFT = BaseNFT{}
+var _ exported.NFT = NFT{}
 
-// NewBaseNFT creates a new NFT instance
-func NewBaseNFT(id, name string, owner sdk.AccAddress, uri, data string) BaseNFT {
-	return BaseNFT{
+// NewNFT creates a new NFT instance
+func NewNFT(id, name string, owner sdk.AccAddress, uri, data string) NFT {
+	return NFT{
 		Id:    id,
 		Name:  name,
 		Owner: owner.String(),
@@ -19,29 +19,29 @@ func NewBaseNFT(id, name string, owner sdk.AccAddress, uri, data string) BaseNFT
 	}
 }
 
-// GetID return the id of BaseNFT
-func (bnft BaseNFT) GetID() string {
+// GetID return the id of NFT
+func (bnft NFT) GetID() string {
 	return bnft.Id
 }
 
-// GetName return the name of BaseNFT
-func (bnft BaseNFT) GetName() string {
+// GetName return the name of NFT
+func (bnft NFT) GetName() string {
 	return bnft.Name
 }
 
-// GetOwner return the owner of BaseNFT
-func (bnft BaseNFT) GetOwner() sdk.AccAddress {
+// GetOwner return the owner of NFT
+func (bnft NFT) GetOwner() sdk.AccAddress {
 	owner, _ := sdk.AccAddressFromBech32(bnft.Owner)
 	return owner
 }
 
-// GetURI return the URI of BaseNFT
-func (bnft BaseNFT) GetURI() string {
+// GetURI return the URI of NFT
+func (bnft NFT) GetURI() string {
 	return bnft.URI
 }
 
-// GetData return the Data of BaseNFT
-func (bnft BaseNFT) GetData() string {
+// GetData return the Data of NFT
+func (bnft NFT) GetData() string {
 	return bnft.Data
 }
 

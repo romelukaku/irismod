@@ -7,14 +7,14 @@ import (
 )
 
 // NewIDCollection creates a new IDCollection instance
-func NewIDCollection(denomID string, tokenIDs []string) IDCollection {
+func NewIDCollection(classID string, tokenIDs []string) IDCollection {
 	return IDCollection{
-		DenomId:  denomID,
+		ClassId:  classID,
 		TokenIds: tokenIDs,
 	}
 }
 
-// Supply return the amount of the denom
+// Supply return the amount of the class
 func (idc IDCollection) Supply() int {
 	return len(idc.TokenIds)
 }
@@ -30,15 +30,15 @@ func (idc IDCollection) AddID(tokenID string) IDCollection {
 type IDCollections []IDCollection
 
 // Add adds an ID to the idCollection
-func (idcs IDCollections) Add(denomID, tokenID string) IDCollections {
+func (idcs IDCollections) Add(classID, tokenID string) IDCollections {
 	for i, idc := range idcs {
-		if idc.DenomId == denomID {
+		if idc.ClassId == classID {
 			idcs[i] = idc.AddID(tokenID)
 			return idcs
 		}
 	}
 	return append(idcs, IDCollection{
-		DenomId:  denomID,
+		ClassId:  classID,
 		TokenIds: []string{tokenID},
 	})
 }

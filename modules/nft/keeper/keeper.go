@@ -31,36 +31,36 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", fmt.Sprintf("irismod/%s", types.ModuleName))
 }
 
-// IssueDenom issues a denom according to the given params
-func (k Keeper) IssueDenom(ctx sdk.Context,
+// IssueClass issues a class according to the given params
+func (k Keeper) IssueClass(ctx sdk.Context,
 	id, name, schema, symbol string,
 	creator sdk.AccAddress,
 	mintRestricted, updateRestricted bool,
 ) error {
-	return k.SetDenom(ctx, types.NewDenom(id, name, schema, symbol, creator, mintRestricted, updateRestricted))
+	return k.SetClass(ctx, types.NewClass(id, name, schema, symbol, creator, mintRestricted, updateRestricted))
 }
 
 // MintNFT mints an NFT and manages the NFT's existence within Collections and Owners
 func (k Keeper) MintNFT(
-	ctx sdk.Context, denomID, tokenID, tokenNm,
+	ctx sdk.Context, classID, tokenID, tokenNm,
 	tokenURI, tokenData string, owner sdk.AccAddress,
 ) error {
-	denom, found := k.GetDenom(ctx, denomID)
+	class, found := k.GetClass(ctx, classID)
 	if !found {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "class ID %s not exists", classID)
 	}
 
-	if denom.MintRestricted && denom.Creator != owner.String() {
-		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not allowed to mint NFT of denom %s", denom.Creator, denomID)
+	if class.MintRestricted && class.Creator != owner.String() {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not allowed to mint NFT of class %s", class.Creator, classID)
 	}
 
-	if k.HasNFT(ctx, denomID, tokenID) {
-		return sdkerrors.Wrapf(types.ErrNFTAlreadyExists, "NFT %s already exists in collection %s", tokenID, denomID)
+	if k.HasNFT(ctx, classID, tokenID) {
+		return sdkerrors.Wrapf(types.ErrNFTAlreadyExists, "NFT %s already exists in collection %s", tokenID, classID)
 	}
 
 	k.setNFT(
-		ctx, denomID,
-		types.NewBaseNFT(
+		ctx, classID,
+		types.NewNFT(
 			tokenID,
 			tokenNm,
 			owner,
@@ -68,29 +68,29 @@ func (k Keeper) MintNFT(
 			tokenData,
 		),
 	)
-	k.setOwner(ctx, denomID, tokenID, owner)
-	k.increaseSupply(ctx, denomID)
+	k.setOwner(ctx, classID, tokenID, owner)
+	k.increaseSupply(ctx, classID)
 
 	return nil
 }
 
 // EditNFT updates an already existing NFT
 func (k Keeper) EditNFT(
-	ctx sdk.Context, denomID, tokenID, tokenNm,
+	ctx sdk.Context, classID, tokenID, tokenNm,
 	tokenURI, tokenData string, owner sdk.AccAddress,
 ) error {
-	denom, found := k.GetDenom(ctx, denomID)
+	class, found := k.GetClass(ctx, classID)
 	if !found {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "class ID %s not exists", classID)
 	}
 
-	if denom.UpdateRestricted {
-		// if true , nobody can update the NFT under this denom
-		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "nobody can update the NFT under this denom %s", denom.Id)
+	if class.UpdateRestricted {
+		// if true , nobody can update the NFT under this class
+		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "nobody can update the NFT under this class %s", class.Id)
 	}
 
 	// just the owner of NFT can edit
-	nft, err := k.Authorize(ctx, denomID, tokenID, owner)
+	nft, err := k.Authorize(ctx, classID, tokenID, owner)
 	if err != nil {
 		return err
 	}
@@ -107,30 +107,30 @@ func (k Keeper) EditNFT(
 		nft.Data = tokenData
 	}
 
-	k.setNFT(ctx, denomID, nft)
+	k.setNFT(ctx, classID, nft)
 
 	return nil
 }
 
 // TransferOwner transfers the ownership of the given NFT to the new owner
 func (k Keeper) TransferOwner(
-	ctx sdk.Context, denomID, tokenID, tokenNm, tokenURI,
+	ctx sdk.Context, classID, tokenID, tokenNm, tokenURI,
 	tokenData string, srcOwner, dstOwner sdk.AccAddress,
 ) error {
-	denom, found := k.GetDenom(ctx, denomID)
+	class, found := k.GetClass(ctx, classID)
 	if !found {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "class ID %s not exists", classID)
 	}
 
-	nft, err := k.Authorize(ctx, denomID, tokenID, srcOwner)
+	nft, err := k.Authorize(ctx, classID, tokenID, srcOwner)
 	if err != nil {
 		return err
 	}
 
 	nft.Owner = dstOwner.String()
 
-	if denom.UpdateRestricted && (types.Modified(tokenNm) || types.Modified(tokenURI) || types.Modified(tokenData)) {
-		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "It is restricted to update NFT under this denom %s", denom.Id)
+	if class.UpdateRestricted && (types.Modified(tokenNm) || types.Modified(tokenURI) || types.Modified(tokenData)) {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "It is restricted to update NFT under this class %s", class.Id)
 	}
 
 	if types.Modified(tokenNm) {
@@ -143,46 +143,46 @@ func (k Keeper) TransferOwner(
 		nft.Data = tokenData
 	}
 
-	k.setNFT(ctx, denomID, nft)
-	k.swapOwner(ctx, denomID, tokenID, srcOwner, dstOwner)
+	k.setNFT(ctx, classID, nft)
+	k.swapOwner(ctx, classID, tokenID, srcOwner, dstOwner)
 	return nil
 }
 
 // BurnNFT deletes a specified NFT
-func (k Keeper) BurnNFT(ctx sdk.Context, denomID, tokenID string, owner sdk.AccAddress) error {
-	if !k.HasDenomID(ctx, denomID) {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+func (k Keeper) BurnNFT(ctx sdk.Context, classID, tokenID string, owner sdk.AccAddress) error {
+	if !k.HasClassID(ctx, classID) {
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "class ID %s not exists", classID)
 	}
 
-	nft, err := k.Authorize(ctx, denomID, tokenID, owner)
+	nft, err := k.Authorize(ctx, classID, tokenID, owner)
 	if err != nil {
 		return err
 	}
 
-	k.deleteNFT(ctx, denomID, nft)
-	k.deleteOwner(ctx, denomID, tokenID, owner)
-	k.decreaseSupply(ctx, denomID)
+	k.deleteNFT(ctx, classID, nft)
+	k.deleteOwner(ctx, classID, tokenID, owner)
+	k.decreaseSupply(ctx, classID)
 
 	return nil
 }
 
-// TransferDenomOwner transfers the ownership of the given denom to the new owner
-func (k Keeper) TransferDenomOwner(
-	ctx sdk.Context, denomID string, srcOwner, dstOwner sdk.AccAddress,
+// TransferClassOwner transfers the ownership of the given class to the new owner
+func (k Keeper) TransferClassOwner(
+	ctx sdk.Context, classID string, srcOwner, dstOwner sdk.AccAddress,
 ) error {
-	denom, found := k.GetDenom(ctx, denomID)
+	class, found := k.GetClass(ctx, classID)
 	if !found {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "class ID %s not exists", classID)
 	}
 
 	// authorize
-	if srcOwner.String() != denom.Creator {
-		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not allowed to transfer denom %s", srcOwner.String(), denomID)
+	if srcOwner.String() != class.Creator {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not allowed to transfer class %s", srcOwner.String(), classID)
 	}
 
-	denom.Creator = dstOwner.String()
+	class.Creator = dstOwner.String()
 
-	err := k.UpdateDenom(ctx, denom)
+	err := k.UpdateClass(ctx, class)
 	if err != nil {
 		return err
 	}

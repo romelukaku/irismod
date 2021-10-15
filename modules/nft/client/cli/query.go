@@ -23,8 +23,8 @@ func GetQueryCmd() *cobra.Command {
 	}
 
 	queryCmd.AddCommand(
-		GetCmdQueryDenom(),
-		GetCmdQueryDenoms(),
+		GetCmdQueryClass(),
+		GetCmdQueryClasses(),
 		GetCmdQueryCollection(),
 		GetCmdQuerySupply(),
 		GetCmdQueryOwner(),
@@ -37,9 +37,9 @@ func GetQueryCmd() *cobra.Command {
 // GetCmdQuerySupply queries the supply of a nft collection
 func GetCmdQuerySupply() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "supply [denom-id]",
+		Use:     "supply [class-id]",
 		Long:    "total supply of a collection or owner of NFTs.",
-		Example: fmt.Sprintf("$ %s query nft supply <denom-id>", version.AppName),
+		Example: fmt.Sprintf("$ %s query nft supply <class-id>", version.AppName),
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -62,7 +62,7 @@ func GetCmdQuerySupply() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 			resp, err := queryClient.Supply(context.Background(), &types.QuerySupplyRequest{
-				DenomId: args[0],
+				ClassId: args[0],
 				Owner:   owner.String(),
 			})
 			if err != nil {
@@ -82,7 +82,7 @@ func GetCmdQueryOwner() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "owner [address]",
 		Long:    "Get the NFTs owned by an account address.",
-		Example: fmt.Sprintf("$ %s query nft owner <address> --denom-id=<denom-id>", version.AppName),
+		Example: fmt.Sprintf("$ %s query nft owner <address> --class-id=<class-id>", version.AppName),
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -97,13 +97,13 @@ func GetCmdQueryOwner() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			denomID, err := cmd.Flags().GetString(FlagDenomID)
+			classID, err := cmd.Flags().GetString(FlagClassID)
 			if err != nil {
 				return err
 			}
 			queryClient := types.NewQueryClient(clientCtx)
 			resp, err := queryClient.Owner(context.Background(), &types.QueryOwnerRequest{
-				DenomId:    denomID,
+				ClassId:    classID,
 				Owner:      args[0],
 				Pagination: pageReq,
 			})
@@ -123,9 +123,9 @@ func GetCmdQueryOwner() *cobra.Command {
 // GetCmdQueryCollection queries all the NFTs from a collection
 func GetCmdQueryCollection() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "collection [denom-id]",
+		Use:     "collection [class-id]",
 		Long:    "Get all the NFTs from a given collection.",
-		Example: fmt.Sprintf("$ %s query nft collection <denom-id>", version.AppName),
+		Example: fmt.Sprintf("$ %s query nft collection <class-id>", version.AppName),
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -141,7 +141,7 @@ func GetCmdQueryCollection() *cobra.Command {
 			resp, err := queryClient.Collection(
 				context.Background(),
 				&types.QueryCollectionRequest{
-					DenomId:    args[0],
+					ClassId:    args[0],
 					Pagination: pageReq,
 				},
 			)
@@ -157,12 +157,12 @@ func GetCmdQueryCollection() *cobra.Command {
 	return cmd
 }
 
-// GetCmdQueryDenoms queries all denoms
-func GetCmdQueryDenoms() *cobra.Command {
+// GetCmdQueryClasses queries all classes
+func GetCmdQueryClasses() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "denoms",
-		Long:    "Query all denominations of all collections of NFTs.",
-		Example: fmt.Sprintf("$ %s query nft denoms", version.AppName),
+		Use:     "classes",
+		Long:    "Query all classinations of all collections of NFTs.",
+		Example: fmt.Sprintf("$ %s query nft classes", version.AppName),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -174,7 +174,7 @@ func GetCmdQueryDenoms() *cobra.Command {
 				return err
 			}
 			queryClient := types.NewQueryClient(clientCtx)
-			resp, err := queryClient.Denoms(context.Background(), &types.QueryDenomsRequest{Pagination: pageReq})
+			resp, err := queryClient.Classes(context.Background(), &types.QueryClassesRequest{Pagination: pageReq})
 			if err != nil {
 				return err
 			}
@@ -182,16 +182,16 @@ func GetCmdQueryDenoms() *cobra.Command {
 		},
 	}
 	flags.AddQueryFlagsToCmd(cmd)
-	flags.AddPaginationFlagsToCmd(cmd, "all denoms")
+	flags.AddPaginationFlagsToCmd(cmd, "all classes")
 	return cmd
 }
 
-// GetCmdQueryDenom queries the specified denom
-func GetCmdQueryDenom() *cobra.Command {
+// GetCmdQueryClass queries the specified class
+func GetCmdQueryClass() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "denom [denom-id]",
-		Long:    "Query the denom by the specified denom id.",
-		Example: fmt.Sprintf("$ %s query nft denom <denom-id>", version.AppName),
+		Use:     "class [class-id]",
+		Long:    "Query the class by the specified class id.",
+		Example: fmt.Sprintf("$ %s query nft class <class-id>", version.AppName),
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -200,14 +200,14 @@ func GetCmdQueryDenom() *cobra.Command {
 			}
 
 			queryClient := types.NewQueryClient(clientCtx)
-			resp, err := queryClient.Denom(
+			resp, err := queryClient.Class(
 				context.Background(),
-				&types.QueryDenomRequest{DenomId: args[0]},
+				&types.QueryClassRequest{ClassId: args[0]},
 			)
 			if err != nil {
 				return err
 			}
-			return clientCtx.PrintProto(resp.Denom)
+			return clientCtx.PrintProto(resp.Class)
 		},
 	}
 	flags.AddQueryFlagsToCmd(cmd)
@@ -218,9 +218,9 @@ func GetCmdQueryDenom() *cobra.Command {
 // GetCmdQueryNFT queries a single NFTs from a collection
 func GetCmdQueryNFT() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "token [denom-id] [nft-id]",
+		Use:     "token [class-id] [nft-id]",
 		Long:    "Query a single NFT from a collection.",
-		Example: fmt.Sprintf("$ %s query nft token <denom-id> <nft-id>", version.AppName),
+		Example: fmt.Sprintf("$ %s query nft token <class-id> <nft-id>", version.AppName),
 		Args:    cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -234,7 +234,7 @@ func GetCmdQueryNFT() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 			resp, err := queryClient.NFT(context.Background(), &types.QueryNFTRequest{
-				DenomId: args[0],
+				ClassId: args[0],
 				TokenId: args[1],
 			})
 			if err != nil {

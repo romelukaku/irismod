@@ -9,8 +9,8 @@ import (
 
 // nolint: deadcode unused
 var (
-	denomID   = "denom"
-	denom     = "denom"
+	classID   = "class"
+	class     = "class"
 	id        = "id1"
 	nftName   = "report"
 	address   = CreateTestAddrs(1)[0]

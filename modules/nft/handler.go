@@ -16,8 +16,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 
 		switch msg := msg.(type) {
-		case *types.MsgIssueDenom:
-			res, err := msgServer.IssueDenom(sdk.WrapSDKContext(ctx), msg)
+		case *types.MsgIssueClass:
+			res, err := msgServer.IssueClass(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
 		case *types.MsgMintNFT:
@@ -36,8 +36,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			res, err := msgServer.BurnNFT(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
-		case *types.MsgTransferDenom:
-			res, err := msgServer.TransferDenom(sdk.WrapSDKContext(ctx), msg)
+		case *types.MsgTransferClass:
+			res, err := msgServer.TransferClass(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
 		default:

@@ -31,18 +31,18 @@ func SupplyInvariant(k Keeper) sdk.Invariant {
 
 		for _, owner := range k.GetOwners(ctx) {
 			for _, idCollection := range owner.IDCollections {
-				ownersCollectionsSupply[idCollection.DenomId] += uint64(idCollection.Supply())
+				ownersCollectionsSupply[idCollection.ClassId] += uint64(idCollection.Supply())
 			}
 		}
 
-		for denom, supply := range ownersCollectionsSupply {
-			if supply != k.GetTotalSupply(ctx, denom) {
+		for class, supply := range ownersCollectionsSupply {
+			if supply != k.GetTotalSupply(ctx, class) {
 				count++
 				msg += fmt.Sprintf(
 					"total %s NFTs supply invariance:\n"+
 						"\ttotal %s NFTs supply: %d\n"+
 						"\tsum of %s NFTs by owner: %d\n",
-					denom, denom, supply, denom, ownersCollectionsSupply[denom],
+					class, class, supply, class, ownersCollectionsSupply[class],
 				)
 			}
 		}

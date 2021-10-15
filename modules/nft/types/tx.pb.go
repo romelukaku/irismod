@@ -28,8 +28,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// MsgIssueDenom defines an SDK message for creating a new denom.
-type MsgIssueDenom struct {
+// MsgIssueClass defines an SDK message for creating a new class.
+type MsgIssueClass struct {
 	Id               string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name             string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Schema           string `protobuf:"bytes,3,opt,name=schema,proto3" json:"schema,omitempty"`
@@ -39,18 +39,18 @@ type MsgIssueDenom struct {
 	UpdateRestricted bool   `protobuf:"varint,7,opt,name=update_restricted,json=updateRestricted,proto3" json:"update_restricted,omitempty"`
 }
 
-func (m *MsgIssueDenom) Reset()         { *m = MsgIssueDenom{} }
-func (m *MsgIssueDenom) String() string { return proto.CompactTextString(m) }
-func (*MsgIssueDenom) ProtoMessage()    {}
-func (*MsgIssueDenom) Descriptor() ([]byte, []int) {
+func (m *MsgIssueClass) Reset()         { *m = MsgIssueClass{} }
+func (m *MsgIssueClass) String() string { return proto.CompactTextString(m) }
+func (*MsgIssueClass) ProtoMessage()    {}
+func (*MsgIssueClass) Descriptor() ([]byte, []int) {
 	return fileDescriptor_09d30374d974e015, []int{0}
 }
-func (m *MsgIssueDenom) XXX_Unmarshal(b []byte) error {
+func (m *MsgIssueClass) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgIssueDenom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgIssueClass) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgIssueDenom.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgIssueClass.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -60,34 +60,34 @@ func (m *MsgIssueDenom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-func (m *MsgIssueDenom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgIssueDenom.Merge(m, src)
+func (m *MsgIssueClass) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIssueClass.Merge(m, src)
 }
-func (m *MsgIssueDenom) XXX_Size() int {
+func (m *MsgIssueClass) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgIssueDenom) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgIssueDenom.DiscardUnknown(m)
+func (m *MsgIssueClass) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIssueClass.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgIssueDenom proto.InternalMessageInfo
+var xxx_messageInfo_MsgIssueClass proto.InternalMessageInfo
 
-// MsgIssueDenomResponse defines the Msg/IssueDenom response type.
-type MsgIssueDenomResponse struct {
+// MsgIssueClassResponse defines the Msg/IssueClass response type.
+type MsgIssueClassResponse struct {
 }
 
-func (m *MsgIssueDenomResponse) Reset()         { *m = MsgIssueDenomResponse{} }
-func (m *MsgIssueDenomResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgIssueDenomResponse) ProtoMessage()    {}
-func (*MsgIssueDenomResponse) Descriptor() ([]byte, []int) {
+func (m *MsgIssueClassResponse) Reset()         { *m = MsgIssueClassResponse{} }
+func (m *MsgIssueClassResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIssueClassResponse) ProtoMessage()    {}
+func (*MsgIssueClassResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_09d30374d974e015, []int{1}
 }
-func (m *MsgIssueDenomResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgIssueClassResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgIssueDenomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgIssueClassResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgIssueDenomResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgIssueClassResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -97,22 +97,22 @@ func (m *MsgIssueDenomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *MsgIssueDenomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgIssueDenomResponse.Merge(m, src)
+func (m *MsgIssueClassResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIssueClassResponse.Merge(m, src)
 }
-func (m *MsgIssueDenomResponse) XXX_Size() int {
+func (m *MsgIssueClassResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgIssueDenomResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgIssueDenomResponse.DiscardUnknown(m)
+func (m *MsgIssueClassResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIssueClassResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgIssueDenomResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgIssueClassResponse proto.InternalMessageInfo
 
 // MsgTransferNFT defines an SDK message for transferring an NFT to recipient.
 type MsgTransferNFT struct {
 	Id        string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	DenomId   string `protobuf:"bytes,2,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId   string `protobuf:"bytes,2,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	Name      string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	URI       string `protobuf:"bytes,4,opt,name=uri,proto3" json:"uri,omitempty"`
 	Data      string `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
@@ -193,7 +193,7 @@ var xxx_messageInfo_MsgTransferNFTResponse proto.InternalMessageInfo
 // MsgEditNFT defines an SDK message for editing a nft.
 type MsgEditNFT struct {
 	Id      string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	DenomId string `protobuf:"bytes,2,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId string `protobuf:"bytes,2,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	Name    string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	URI     string `protobuf:"bytes,4,opt,name=uri,proto3" json:"uri,omitempty"`
 	Data    string `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
@@ -273,7 +273,7 @@ var xxx_messageInfo_MsgEditNFTResponse proto.InternalMessageInfo
 // MsgMintNFT defines an SDK message for creating a new NFT.
 type MsgMintNFT struct {
 	Id        string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	DenomId   string `protobuf:"bytes,2,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId   string `protobuf:"bytes,2,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	Name      string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	URI       string `protobuf:"bytes,4,opt,name=uri,proto3" json:"uri,omitempty"`
 	Data      string `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
@@ -354,7 +354,7 @@ var xxx_messageInfo_MsgMintNFTResponse proto.InternalMessageInfo
 // MsgBurnNFT defines an SDK message for burning a NFT.
 type MsgBurnNFT struct {
 	Id      string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	DenomId string `protobuf:"bytes,2,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId string `protobuf:"bytes,2,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	Sender  string `protobuf:"bytes,3,opt,name=sender,proto3" json:"sender,omitempty"`
 }
 
@@ -428,25 +428,25 @@ func (m *MsgBurnNFTResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgBurnNFTResponse proto.InternalMessageInfo
 
-// MsgTransferDenom defines an SDK message for transferring an denom to recipient.
-type MsgTransferDenom struct {
+// MsgTransferClass defines an SDK message for transferring an class to recipient.
+type MsgTransferClass struct {
 	Id        string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Sender    string `protobuf:"bytes,2,opt,name=sender,proto3" json:"sender,omitempty"`
 	Recipient string `protobuf:"bytes,3,opt,name=recipient,proto3" json:"recipient,omitempty"`
 }
 
-func (m *MsgTransferDenom) Reset()         { *m = MsgTransferDenom{} }
-func (m *MsgTransferDenom) String() string { return proto.CompactTextString(m) }
-func (*MsgTransferDenom) ProtoMessage()    {}
-func (*MsgTransferDenom) Descriptor() ([]byte, []int) {
+func (m *MsgTransferClass) Reset()         { *m = MsgTransferClass{} }
+func (m *MsgTransferClass) String() string { return proto.CompactTextString(m) }
+func (*MsgTransferClass) ProtoMessage()    {}
+func (*MsgTransferClass) Descriptor() ([]byte, []int) {
 	return fileDescriptor_09d30374d974e015, []int{10}
 }
-func (m *MsgTransferDenom) XXX_Unmarshal(b []byte) error {
+func (m *MsgTransferClass) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgTransferDenom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgTransferClass) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgTransferDenom.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgTransferClass.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -456,34 +456,34 @@ func (m *MsgTransferDenom) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-func (m *MsgTransferDenom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgTransferDenom.Merge(m, src)
+func (m *MsgTransferClass) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgTransferClass.Merge(m, src)
 }
-func (m *MsgTransferDenom) XXX_Size() int {
+func (m *MsgTransferClass) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgTransferDenom) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgTransferDenom.DiscardUnknown(m)
+func (m *MsgTransferClass) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgTransferClass.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgTransferDenom proto.InternalMessageInfo
+var xxx_messageInfo_MsgTransferClass proto.InternalMessageInfo
 
-// MsgTransferDenomResponse defines the Msg/TransferDenom response type.
-type MsgTransferDenomResponse struct {
+// MsgTransferClassResponse defines the Msg/TransferClass response type.
+type MsgTransferClassResponse struct {
 }
 
-func (m *MsgTransferDenomResponse) Reset()         { *m = MsgTransferDenomResponse{} }
-func (m *MsgTransferDenomResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgTransferDenomResponse) ProtoMessage()    {}
-func (*MsgTransferDenomResponse) Descriptor() ([]byte, []int) {
+func (m *MsgTransferClassResponse) Reset()         { *m = MsgTransferClassResponse{} }
+func (m *MsgTransferClassResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgTransferClassResponse) ProtoMessage()    {}
+func (*MsgTransferClassResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_09d30374d974e015, []int{11}
 }
-func (m *MsgTransferDenomResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgTransferClassResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgTransferDenomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgTransferClassResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgTransferDenomResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgTransferClassResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -493,21 +493,21 @@ func (m *MsgTransferDenomResponse) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *MsgTransferDenomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgTransferDenomResponse.Merge(m, src)
+func (m *MsgTransferClassResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgTransferClassResponse.Merge(m, src)
 }
-func (m *MsgTransferDenomResponse) XXX_Size() int {
+func (m *MsgTransferClassResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgTransferDenomResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgTransferDenomResponse.DiscardUnknown(m)
+func (m *MsgTransferClassResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgTransferClassResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgTransferDenomResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgTransferClassResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*MsgIssueDenom)(nil), "irismod.nft.MsgIssueDenom")
-	proto.RegisterType((*MsgIssueDenomResponse)(nil), "irismod.nft.MsgIssueDenomResponse")
+	proto.RegisterType((*MsgIssueClass)(nil), "irismod.nft.MsgIssueClass")
+	proto.RegisterType((*MsgIssueClassResponse)(nil), "irismod.nft.MsgIssueClassResponse")
 	proto.RegisterType((*MsgTransferNFT)(nil), "irismod.nft.MsgTransferNFT")
 	proto.RegisterType((*MsgTransferNFTResponse)(nil), "irismod.nft.MsgTransferNFTResponse")
 	proto.RegisterType((*MsgEditNFT)(nil), "irismod.nft.MsgEditNFT")
@@ -516,8 +516,8 @@ func init() {
 	proto.RegisterType((*MsgMintNFTResponse)(nil), "irismod.nft.MsgMintNFTResponse")
 	proto.RegisterType((*MsgBurnNFT)(nil), "irismod.nft.MsgBurnNFT")
 	proto.RegisterType((*MsgBurnNFTResponse)(nil), "irismod.nft.MsgBurnNFTResponse")
-	proto.RegisterType((*MsgTransferDenom)(nil), "irismod.nft.MsgTransferDenom")
-	proto.RegisterType((*MsgTransferDenomResponse)(nil), "irismod.nft.MsgTransferDenomResponse")
+	proto.RegisterType((*MsgTransferClass)(nil), "irismod.nft.MsgTransferClass")
+	proto.RegisterType((*MsgTransferClassResponse)(nil), "irismod.nft.MsgTransferClassResponse")
 }
 
 func init() { proto.RegisterFile("nft/tx.proto", fileDescriptor_09d30374d974e015) }
@@ -563,14 +563,14 @@ var fileDescriptor_09d30374d974e015 = []byte{
 	0x8f, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x20, 0xba, 0xca, 0xd5, 0xd9, 0x06, 0x00, 0x00,
 }
 
-func (this *MsgIssueDenom) Equal(that interface{}) bool {
+func (this *MsgIssueClass) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*MsgIssueDenom)
+	that1, ok := that.(*MsgIssueClass)
 	if !ok {
-		that2, ok := that.(MsgIssueDenom)
+		that2, ok := that.(MsgIssueClass)
 		if ok {
 			that1 = &that2
 		} else {
@@ -627,7 +627,7 @@ func (this *MsgTransferNFT) Equal(that interface{}) bool {
 	if this.Id != that1.Id {
 		return false
 	}
-	if this.DenomId != that1.DenomId {
+	if this.ClassId != that1.ClassId {
 		return false
 	}
 	if this.Name != that1.Name {
@@ -669,7 +669,7 @@ func (this *MsgEditNFT) Equal(that interface{}) bool {
 	if this.Id != that1.Id {
 		return false
 	}
-	if this.DenomId != that1.DenomId {
+	if this.ClassId != that1.ClassId {
 		return false
 	}
 	if this.Name != that1.Name {
@@ -708,7 +708,7 @@ func (this *MsgMintNFT) Equal(that interface{}) bool {
 	if this.Id != that1.Id {
 		return false
 	}
-	if this.DenomId != that1.DenomId {
+	if this.ClassId != that1.ClassId {
 		return false
 	}
 	if this.Name != that1.Name {
@@ -750,7 +750,7 @@ func (this *MsgBurnNFT) Equal(that interface{}) bool {
 	if this.Id != that1.Id {
 		return false
 	}
-	if this.DenomId != that1.DenomId {
+	if this.ClassId != that1.ClassId {
 		return false
 	}
 	if this.Sender != that1.Sender {
@@ -758,14 +758,14 @@ func (this *MsgBurnNFT) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *MsgTransferDenom) Equal(that interface{}) bool {
+func (this *MsgTransferClass) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*MsgTransferDenom)
+	that1, ok := that.(*MsgTransferClass)
 	if !ok {
-		that2, ok := that.(MsgTransferDenom)
+		that2, ok := that.(MsgTransferClass)
 		if ok {
 			that1 = &that2
 		} else {
@@ -801,8 +801,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
-	// IssueDenom defines a method for issue a denom.
-	IssueDenom(ctx context.Context, in *MsgIssueDenom, opts ...grpc.CallOption) (*MsgIssueDenomResponse, error)
+	// IssueClass defines a method for issue a class.
+	IssueClass(ctx context.Context, in *MsgIssueClass, opts ...grpc.CallOption) (*MsgIssueClassResponse, error)
 	// MintNFT defines a method for mint a new nft
 	MintNFT(ctx context.Context, in *MsgMintNFT, opts ...grpc.CallOption) (*MsgMintNFTResponse, error)
 	// RefundHTLC defines a method for editing a nft.
@@ -811,8 +811,8 @@ type MsgClient interface {
 	TransferNFT(ctx context.Context, in *MsgTransferNFT, opts ...grpc.CallOption) (*MsgTransferNFTResponse, error)
 	// BurnNFT defines a method for burning a nft.
 	BurnNFT(ctx context.Context, in *MsgBurnNFT, opts ...grpc.CallOption) (*MsgBurnNFTResponse, error)
-	// TransferDenom defines a method for transferring a denom.
-	TransferDenom(ctx context.Context, in *MsgTransferDenom, opts ...grpc.CallOption) (*MsgTransferDenomResponse, error)
+	// TransferClass defines a method for transferring a class.
+	TransferClass(ctx context.Context, in *MsgTransferClass, opts ...grpc.CallOption) (*MsgTransferClassResponse, error)
 }
 
 type msgClient struct {
@@ -823,9 +823,9 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 	return &msgClient{cc}
 }
 
-func (c *msgClient) IssueDenom(ctx context.Context, in *MsgIssueDenom, opts ...grpc.CallOption) (*MsgIssueDenomResponse, error) {
-	out := new(MsgIssueDenomResponse)
-	err := c.cc.Invoke(ctx, "/irismod.nft.Msg/IssueDenom", in, out, opts...)
+func (c *msgClient) IssueClass(ctx context.Context, in *MsgIssueClass, opts ...grpc.CallOption) (*MsgIssueClassResponse, error) {
+	out := new(MsgIssueClassResponse)
+	err := c.cc.Invoke(ctx, "/irismod.nft.Msg/IssueClass", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -868,9 +868,9 @@ func (c *msgClient) BurnNFT(ctx context.Context, in *MsgBurnNFT, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *msgClient) TransferDenom(ctx context.Context, in *MsgTransferDenom, opts ...grpc.CallOption) (*MsgTransferDenomResponse, error) {
-	out := new(MsgTransferDenomResponse)
-	err := c.cc.Invoke(ctx, "/irismod.nft.Msg/TransferDenom", in, out, opts...)
+func (c *msgClient) TransferClass(ctx context.Context, in *MsgTransferClass, opts ...grpc.CallOption) (*MsgTransferClassResponse, error) {
+	out := new(MsgTransferClassResponse)
+	err := c.cc.Invoke(ctx, "/irismod.nft.Msg/TransferClass", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -879,8 +879,8 @@ func (c *msgClient) TransferDenom(ctx context.Context, in *MsgTransferDenom, opt
 
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
-	// IssueDenom defines a method for issue a denom.
-	IssueDenom(context.Context, *MsgIssueDenom) (*MsgIssueDenomResponse, error)
+	// IssueClass defines a method for issue a class.
+	IssueClass(context.Context, *MsgIssueClass) (*MsgIssueClassResponse, error)
 	// MintNFT defines a method for mint a new nft
 	MintNFT(context.Context, *MsgMintNFT) (*MsgMintNFTResponse, error)
 	// RefundHTLC defines a method for editing a nft.
@@ -889,16 +889,16 @@ type MsgServer interface {
 	TransferNFT(context.Context, *MsgTransferNFT) (*MsgTransferNFTResponse, error)
 	// BurnNFT defines a method for burning a nft.
 	BurnNFT(context.Context, *MsgBurnNFT) (*MsgBurnNFTResponse, error)
-	// TransferDenom defines a method for transferring a denom.
-	TransferDenom(context.Context, *MsgTransferDenom) (*MsgTransferDenomResponse, error)
+	// TransferClass defines a method for transferring a class.
+	TransferClass(context.Context, *MsgTransferClass) (*MsgTransferClassResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
 type UnimplementedMsgServer struct {
 }
 
-func (*UnimplementedMsgServer) IssueDenom(ctx context.Context, req *MsgIssueDenom) (*MsgIssueDenomResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IssueDenom not implemented")
+func (*UnimplementedMsgServer) IssueClass(ctx context.Context, req *MsgIssueClass) (*MsgIssueClassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IssueClass not implemented")
 }
 func (*UnimplementedMsgServer) MintNFT(ctx context.Context, req *MsgMintNFT) (*MsgMintNFTResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MintNFT not implemented")
@@ -912,28 +912,28 @@ func (*UnimplementedMsgServer) TransferNFT(ctx context.Context, req *MsgTransfer
 func (*UnimplementedMsgServer) BurnNFT(ctx context.Context, req *MsgBurnNFT) (*MsgBurnNFTResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BurnNFT not implemented")
 }
-func (*UnimplementedMsgServer) TransferDenom(ctx context.Context, req *MsgTransferDenom) (*MsgTransferDenomResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TransferDenom not implemented")
+func (*UnimplementedMsgServer) TransferClass(ctx context.Context, req *MsgTransferClass) (*MsgTransferClassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransferClass not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
 	s.RegisterService(&_Msg_serviceDesc, srv)
 }
 
-func _Msg_IssueDenom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgIssueDenom)
+func _Msg_IssueClass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIssueClass)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).IssueDenom(ctx, in)
+		return srv.(MsgServer).IssueClass(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/irismod.nft.Msg/IssueDenom",
+		FullMethod: "/irismod.nft.Msg/IssueClass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).IssueDenom(ctx, req.(*MsgIssueDenom))
+		return srv.(MsgServer).IssueClass(ctx, req.(*MsgIssueClass))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1010,20 +1010,20 @@ func _Msg_BurnNFT_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_TransferDenom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgTransferDenom)
+func _Msg_TransferClass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgTransferClass)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).TransferDenom(ctx, in)
+		return srv.(MsgServer).TransferClass(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/irismod.nft.Msg/TransferDenom",
+		FullMethod: "/irismod.nft.Msg/TransferClass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).TransferDenom(ctx, req.(*MsgTransferDenom))
+		return srv.(MsgServer).TransferClass(ctx, req.(*MsgTransferClass))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1033,8 +1033,8 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "IssueDenom",
-			Handler:    _Msg_IssueDenom_Handler,
+			MethodName: "IssueClass",
+			Handler:    _Msg_IssueClass_Handler,
 		},
 		{
 			MethodName: "MintNFT",
@@ -1053,15 +1053,15 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_BurnNFT_Handler,
 		},
 		{
-			MethodName: "TransferDenom",
-			Handler:    _Msg_TransferDenom_Handler,
+			MethodName: "TransferClass",
+			Handler:    _Msg_TransferClass_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "nft/tx.proto",
 }
 
-func (m *MsgIssueDenom) Marshal() (dAtA []byte, err error) {
+func (m *MsgIssueClass) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1071,12 +1071,12 @@ func (m *MsgIssueDenom) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgIssueDenom) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgIssueClass) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgIssueDenom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgIssueClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1139,7 +1139,7 @@ func (m *MsgIssueDenom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgIssueDenomResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgIssueClassResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1149,12 +1149,12 @@ func (m *MsgIssueDenomResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgIssueDenomResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgIssueClassResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgIssueDenomResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgIssueClassResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1217,10 +1217,10 @@ func (m *MsgTransferNFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1305,10 +1305,10 @@ func (m *MsgEditNFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1400,10 +1400,10 @@ func (m *MsgMintNFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1467,10 +1467,10 @@ func (m *MsgBurnNFT) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1507,7 +1507,7 @@ func (m *MsgBurnNFTResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgTransferDenom) Marshal() (dAtA []byte, err error) {
+func (m *MsgTransferClass) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1517,12 +1517,12 @@ func (m *MsgTransferDenom) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgTransferDenom) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgTransferClass) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgTransferDenom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgTransferClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1551,7 +1551,7 @@ func (m *MsgTransferDenom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgTransferDenomResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgTransferClassResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1561,12 +1561,12 @@ func (m *MsgTransferDenomResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgTransferDenomResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgTransferClassResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgTransferDenomResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgTransferClassResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1585,7 +1585,7 @@ func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *MsgIssueDenom) Size() (n int) {
+func (m *MsgIssueClass) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1620,7 +1620,7 @@ func (m *MsgIssueDenom) Size() (n int) {
 	return n
 }
 
-func (m *MsgIssueDenomResponse) Size() (n int) {
+func (m *MsgIssueClassResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1639,7 +1639,7 @@ func (m *MsgTransferNFT) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1685,7 +1685,7 @@ func (m *MsgEditNFT) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1727,7 +1727,7 @@ func (m *MsgMintNFT) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1773,7 +1773,7 @@ func (m *MsgBurnNFT) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1793,7 +1793,7 @@ func (m *MsgBurnNFTResponse) Size() (n int) {
 	return n
 }
 
-func (m *MsgTransferDenom) Size() (n int) {
+func (m *MsgTransferClass) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1814,7 +1814,7 @@ func (m *MsgTransferDenom) Size() (n int) {
 	return n
 }
 
-func (m *MsgTransferDenomResponse) Size() (n int) {
+func (m *MsgTransferClassResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1829,7 +1829,7 @@ func sovTx(x uint64) (n int) {
 func sozTx(x uint64) (n int) {
 	return sovTx(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *MsgIssueDenom) Unmarshal(dAtA []byte) error {
+func (m *MsgIssueClass) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1852,10 +1852,10 @@ func (m *MsgIssueDenom) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgIssueDenom: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgIssueClass: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgIssueDenom: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgIssueClass: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2079,7 +2079,7 @@ func (m *MsgIssueDenom) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgIssueDenomResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgIssueClassResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2102,10 +2102,10 @@ func (m *MsgIssueDenomResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgIssueDenomResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgIssueClassResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgIssueDenomResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgIssueClassResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
@@ -2192,7 +2192,7 @@ func (m *MsgTransferNFT) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2220,7 +2220,7 @@ func (m *MsgTransferNFT) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -2516,7 +2516,7 @@ func (m *MsgEditNFT) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2544,7 +2544,7 @@ func (m *MsgEditNFT) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -2808,7 +2808,7 @@ func (m *MsgMintNFT) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2836,7 +2836,7 @@ func (m *MsgMintNFT) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -3132,7 +3132,7 @@ func (m *MsgBurnNFT) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3160,7 +3160,7 @@ func (m *MsgBurnNFT) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -3265,7 +3265,7 @@ func (m *MsgBurnNFTResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgTransferDenom) Unmarshal(dAtA []byte) error {
+func (m *MsgTransferClass) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3288,10 +3288,10 @@ func (m *MsgTransferDenom) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgTransferDenom: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgTransferClass: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgTransferDenom: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgTransferClass: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3411,7 +3411,7 @@ func (m *MsgTransferDenom) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgTransferDenomResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgTransferClassResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3434,10 +3434,10 @@ func (m *MsgTransferDenomResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgTransferDenomResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgTransferClassResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgTransferDenomResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgTransferClassResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

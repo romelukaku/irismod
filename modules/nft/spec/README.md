@@ -20,8 +20,8 @@ NFTs on application specific blockchains share some but not all features as thei
    - [Collections](./01_state.md#collections)
    - [Owners](./01_state.md#owners)
 1. **[Messages](./02_messages.md)**
-   - [Issue Denom](./02_messages.md#msgissuedenom)
-   - [Transfer Denom](./02_messages.md#msgtransferdenom)
+   - [Issue Class](./02_messages.md#msgissueclass)
+   - [Transfer Class](./02_messages.md#msgtransferclass)
    - [Transfer NFT](./02_messages.md#msgtransfernft)
    - [Edit NFT](./02_messages.md#msgtransfernft)
    - [Mint NFT](./02_messages.md#msgmintnft)
@@ -32,7 +32,7 @@ NFTs on application specific blockchains share some but not all features as thei
 
 ## A Note on Metadata & IBC
 
-The BaseNFT includes `tokenURI` in order to be backwards compatible with Ethereum based NFTs. However the `NFT` type is an interface that allows arbitrary tokenData to be stored on chain should it need be. Originally the module included `name`, `description` and `image` to demonstrate these capabilities. They were removed in order for the NFT to be more efficient for use cases that don't include a need for that information to be stored on chain. A demonstration of including them will be included in a sample app. It is also under discussion to move all tokenData to a separate module that can handle arbitrary amounts of data on chain and can be used to describe assets beyond Non-Fungible Tokens, like normal Fungible Tokens `Coin` that could describe attributes like decimal places and vesting status.
+The NFT includes `tokenURI` in order to be backwards compatible with Ethereum based NFTs. However the `NFT` type is an interface that allows arbitrary tokenData to be stored on chain should it need be. Originally the module included `name`, `description` and `image` to demonstrate these capabilities. They were removed in order for the NFT to be more efficient for use cases that don't include a need for that information to be stored on chain. A demonstration of including them will be included in a sample app. It is also under discussion to move all tokenData to a separate module that can handle arbitrary amounts of data on chain and can be used to describe assets beyond Non-Fungible Tokens, like normal Fungible Tokens `Coin` that could describe attributes like decimal places and vesting status.
 
 A stand-alone tokenData Module would allow for independent standards to evolve regarding arbitrary asset types with expanding precision. The standards supported by [http://schema.org](http://schema.org) and the process of adding nested information is being considered as a starting point for that standard. The Blockchain Gaming Alliance is working on a tokenData standard to be used for specifically blockchain gaming assets.
 

@@ -22,7 +22,7 @@ func (suite *KeeperSuite) TestNewQuerier() {
 
 func (suite *KeeperSuite) TestQuerySupply() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	querier := keep.NewQuerier(suite.keeper, suite.legacyAmino)
@@ -39,7 +39,7 @@ func (suite *KeeperSuite) TestQuerySupply() {
 	suite.Error(err)
 	suite.Nil(res)
 
-	queryCollectionParams := types.NewQuerySupplyParams(denomID2, nil)
+	queryCollectionParams := types.NewQuerySupplyParams(classID2, nil)
 	bz, errRes := suite.legacyAmino.MarshalJSON(queryCollectionParams)
 	suite.Nil(errRes)
 	query.Data = bz
@@ -48,7 +48,7 @@ func (suite *KeeperSuite) TestQuerySupply() {
 	supplyResp := binary.LittleEndian.Uint64(res)
 	suite.Equal(0, int(supplyResp))
 
-	queryCollectionParams = types.NewQuerySupplyParams(denomID, nil)
+	queryCollectionParams = types.NewQuerySupplyParams(classID, nil)
 	bz, errRes = suite.legacyAmino.MarshalJSON(queryCollectionParams)
 	suite.Nil(errRes)
 	query.Data = bz
@@ -63,7 +63,7 @@ func (suite *KeeperSuite) TestQuerySupply() {
 
 func (suite *KeeperSuite) TestQueryCollection() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	querier := keep.NewQuerier(suite.keeper, suite.legacyAmino)
@@ -80,7 +80,7 @@ func (suite *KeeperSuite) TestQueryCollection() {
 	suite.Error(err)
 	suite.Nil(res)
 
-	queryCollectionParams := types.NewQuerySupplyParams(denomID2, nil)
+	queryCollectionParams := types.NewQuerySupplyParams(classID2, nil)
 	bz, errRes := suite.legacyAmino.MarshalJSON(queryCollectionParams)
 	suite.Nil(errRes)
 
@@ -88,7 +88,7 @@ func (suite *KeeperSuite) TestQueryCollection() {
 	_, err = querier(suite.ctx, []string{"collection"}, query)
 	suite.NoError(err)
 
-	queryCollectionParams = types.NewQuerySupplyParams(denomID, nil)
+	queryCollectionParams = types.NewQuerySupplyParams(classID, nil)
 	bz, errRes = suite.legacyAmino.MarshalJSON(queryCollectionParams)
 	suite.Nil(errRes)
 
@@ -104,10 +104,10 @@ func (suite *KeeperSuite) TestQueryCollection() {
 
 func (suite *KeeperSuite) TestQueryOwner() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
-	err = suite.keeper.MintNFT(suite.ctx, denomID2, tokenID, tokenNm, tokenURI, tokenData, address)
+	err = suite.keeper.MintNFT(suite.ctx, classID2, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	querier := keep.NewQuerier(suite.keeper, suite.legacyAmino)
@@ -120,7 +120,7 @@ func (suite *KeeperSuite) TestQueryOwner() {
 	_, err = querier(suite.ctx, []string{"owner"}, query)
 	suite.Error(err)
 
-	// query the balance using no denomID so that all denoms will be returns
+	// query the balance using no classID so that all classes will be returns
 	params := types.NewQuerySupplyParams("", address)
 	bz, err2 := suite.legacyAmino.MarshalJSON(params)
 	suite.Nil(err2)
@@ -133,9 +133,9 @@ func (suite *KeeperSuite) TestQueryOwner() {
 
 	suite.legacyAmino.MustUnmarshalJSON(res, &out)
 
-	// build the owner using both denoms
-	idCollection1 := types.NewIDCollection(denomID, []string{tokenID})
-	idCollection2 := types.NewIDCollection(denomID2, []string{tokenID})
+	// build the owner using both classes
+	idCollection1 := types.NewIDCollection(classID, []string{tokenID})
+	idCollection2 := types.NewIDCollection(classID2, []string{tokenID})
 	owner := types.NewOwner(address, idCollection1, idCollection2)
 
 	suite.EqualValues(out.String(), owner.String())
@@ -143,7 +143,7 @@ func (suite *KeeperSuite) TestQueryOwner() {
 
 func (suite *KeeperSuite) TestQueryNFT() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	querier := keep.NewQuerier(suite.keeper, suite.legacyAmino)
@@ -160,7 +160,7 @@ func (suite *KeeperSuite) TestQueryNFT() {
 	suite.Error(err)
 	suite.Nil(res)
 
-	params := types.NewQueryNFTParams(denomID2, tokenID2)
+	params := types.NewQueryNFTParams(classID2, tokenID2)
 	bz, err2 := suite.legacyAmino.MarshalJSON(params)
 	suite.Nil(err2)
 
@@ -169,7 +169,7 @@ func (suite *KeeperSuite) TestQueryNFT() {
 	suite.Error(err)
 	suite.Nil(res)
 
-	params = types.NewQueryNFTParams(denomID, tokenID)
+	params = types.NewQueryNFTParams(classID, tokenID)
 	bz, err2 = suite.legacyAmino.MarshalJSON(params)
 	suite.Nil(err2)
 
@@ -186,12 +186,12 @@ func (suite *KeeperSuite) TestQueryNFT() {
 	suite.Equal(out.GetOwner(), address)
 }
 
-func (suite *KeeperSuite) TestQueryDenoms() {
+func (suite *KeeperSuite) TestQueryClasses() {
 	// MintNFT shouldn't fail when collection does not exist
-	err := suite.keeper.MintNFT(suite.ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, address)
+	err := suite.keeper.MintNFT(suite.ctx, classID, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
-	err = suite.keeper.MintNFT(suite.ctx, denomID2, tokenID, tokenNm, tokenURI, tokenData, address)
+	err = suite.keeper.MintNFT(suite.ctx, classID2, tokenID, tokenNm, tokenURI, tokenData, address)
 	suite.NoError(err)
 
 	querier := keep.NewQuerier(suite.keeper, suite.legacyAmino)
@@ -201,18 +201,18 @@ func (suite *KeeperSuite) TestQueryDenoms() {
 		Data: []byte{},
 	}
 	var res []byte
-	query.Path = "/custom/nft/denoms"
+	query.Path = "/custom/nft/classes"
 
-	res, err = querier(suite.ctx, []string{"denoms"}, query)
+	res, err = querier(suite.ctx, []string{"classes"}, query)
 	suite.NoError(err)
 	suite.NotNil(res)
 
-	denoms := []string{denomID, denomID2, denomID3}
+	classes := []string{classID, classID2, classID3}
 
-	var out []types.Denom
+	var out []types.Class
 	suite.legacyAmino.MustUnmarshalJSON(res, &out)
 
-	for key, denomInQuestion := range out {
-		suite.Equal(denomInQuestion.Id, denoms[key])
+	for key, classInQuestion := range out {
+		suite.Equal(classInQuestion.Id, classes[key])
 	}
 }

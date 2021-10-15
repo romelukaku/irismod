@@ -25,13 +25,13 @@ service Query {
         option (google.api.http).get = "/irismod/nft/collections/{denom_id}";
     }
 
-    // Denom queries the definition of a given denom
-    rpc Denom(QueryDenomRequest) returns (QueryDenomResponse) {
+    // Class queries the definition of a given denom
+    rpc Class(QueryClassRequest) returns (QueryClassResponse) {
         option (google.api.http).get = "/irismod/nft/denoms/{denom_id}";
     }
 
-    // Denoms queries all the denoms
-    rpc Denoms(QueryDenomsRequest) returns (QueryDenomsResponse) {
+    // Classes queries all the denoms
+    rpc Classes(QueryClassesRequest) returns (QueryClassesResponse) {
         option (google.api.http).get = "/irismod/nft/denoms";
     }
 
@@ -79,25 +79,25 @@ message QueryCollectionResponse {
     cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
-// QueryDenomRequest is the request type for the Query/Denom RPC method
-message QueryDenomRequest {
+// QueryClassRequest is the request type for the Query/Class RPC method
+message QueryClassRequest {
     string denom_id = 1 [ (gogoproto.moretags) = "yaml:\"denom_id\"" ];
 }
 
-// QueryDenomResponse is the response type for the Query/Denom RPC method
-message QueryDenomResponse {
-    Denom denom = 1;
+// QueryClassResponse is the response type for the Query/Class RPC method
+message QueryClassResponse {
+    Class denom = 1;
 }
 
-// QueryDenomsRequest is the request type for the Query/Denoms RPC method
-message QueryDenomsRequest {
+// QueryClassesRequest is the request type for the Query/Classes RPC method
+message QueryClassesRequest {
     // pagination defines an optional pagination for the request.
     cosmos.base.query.v1beta1.PageRequest pagination = 1;
 }
 
-// QueryDenomsResponse is the response type for the Query/Denoms RPC method
-message QueryDenomsResponse {
-    repeated Denom denoms = 1 [ (gogoproto.nullable) = false ];
+// QueryClassesResponse is the response type for the Query/Classes RPC method
+message QueryClassesResponse {
+    repeated Class denoms = 1 [ (gogoproto.nullable) = false ];
 
     cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }

@@ -15,21 +15,21 @@ import (
 )
 
 func registerTxRoutes(cliCtx client.Context, r *mux.Router, queryRoute string) {
-	// Issue a denom
-	r.HandleFunc("/nft/nfts/denoms/issue", issueDenomHandlerFn(cliCtx)).Methods("POST")
+	// Issue a class
+	r.HandleFunc("/nft/nfts/classes/issue", issueClassHandlerFn(cliCtx)).Methods("POST")
 	// Mint an NFT
 	r.HandleFunc("/nft/nfts/mint", mintNFTHandlerFn(cliCtx)).Methods("POST")
 	// Update an NFT
-	r.HandleFunc(fmt.Sprintf("/nft/nfts/{%s}/{%s}", RestParamDenomID, RestParamTokenID), editNFTHandlerFn(cliCtx)).Methods("PUT")
+	r.HandleFunc(fmt.Sprintf("/nft/nfts/{%s}/{%s}", RestParamClassID, RestParamTokenID), editNFTHandlerFn(cliCtx)).Methods("PUT")
 	// Transfer an NFT to an address
-	r.HandleFunc(fmt.Sprintf("/nft/nfts/{%s}/{%s}/transfer", RestParamDenomID, RestParamTokenID), transferNFTHandlerFn(cliCtx)).Methods("POST")
+	r.HandleFunc(fmt.Sprintf("/nft/nfts/{%s}/{%s}/transfer", RestParamClassID, RestParamTokenID), transferNFTHandlerFn(cliCtx)).Methods("POST")
 	// Burn an NFT
-	r.HandleFunc(fmt.Sprintf("/nft/nfts/{%s}/{%s}/burn", RestParamDenomID, RestParamTokenID), burnNFTHandlerFn(cliCtx)).Methods("POST")
+	r.HandleFunc(fmt.Sprintf("/nft/nfts/{%s}/{%s}/burn", RestParamClassID, RestParamTokenID), burnNFTHandlerFn(cliCtx)).Methods("POST")
 }
 
-func issueDenomHandlerFn(cliCtx client.Context) http.HandlerFunc {
+func issueClassHandlerFn(cliCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req issueDenomReq
+		var req issueClassReq
 		if !rest.ReadRESTReq(w, r, cliCtx.LegacyAmino, &req) {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, "failed to parse request")
 			return
@@ -40,7 +40,7 @@ func issueDenomHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		}
 
 		// create the message
-		msg := types.NewMsgIssueDenom(req.ID, req.Name, req.Schema, req.Owner, req.Symbol, req.MintRestricted, req.UpdateRestricted)
+		msg := types.NewMsgIssueClass(req.ID, req.Name, req.Schema, req.Owner, req.Symbol, req.MintRestricted, req.UpdateRestricted)
 		if err := msg.ValidateBasic(); err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -67,7 +67,7 @@ func mintNFTHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		// create the message
 		msg := types.NewMsgMintNFT(
 			req.ID,
-			req.DenomID,
+			req.ClassID,
 			req.Name,
 			req.URI,
 			req.Data,
@@ -98,7 +98,7 @@ func editNFTHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		// create the message
 		msg := types.NewMsgEditNFT(
 			vars[RestParamTokenID],
-			vars[RestParamDenomID],
+			vars[RestParamClassID],
 			req.Name,
 			req.URI,
 			req.Data, req.Owner,
@@ -131,7 +131,7 @@ func transferNFTHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		// create the message
 		msg := types.NewMsgTransferNFT(
 			vars[RestParamTokenID],
-			vars[RestParamDenomID],
+			vars[RestParamClassID],
 			req.Name,
 			req.URI,
 			req.Data,
@@ -164,7 +164,7 @@ func burnNFTHandlerFn(cliCtx client.Context) http.HandlerFunc {
 		msg := types.NewMsgBurnNFT(
 			req.Owner,
 			vars[RestParamTokenID],
-			vars[RestParamDenomID],
+			vars[RestParamClassID],
 		)
 		if err := msg.ValidateBasic(); err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())

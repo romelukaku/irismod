@@ -2,12 +2,12 @@ package types
 
 // NFT module event types
 var (
-	EventTypeIssueDenom    = "issue_denom"
+	EventTypeIssueClass    = "issue_class"
 	EventTypeTransfer      = "transfer_nft"
 	EventTypeEditNFT       = "edit_nft"
 	EventTypeMintNFT       = "mint_nft"
 	EventTypeBurnNFT       = "burn_nft"
-	EventTypeTransferDenom = "transfer_denom"
+	EventTypeTransferClass = "transfer_class"
 
 	AttributeValueCategory = ModuleName
 
@@ -17,6 +17,6 @@ var (
 	AttributeKeyOwner     = "owner"
 	AttributeKeyTokenID   = "token_id"
 	AttributeKeyTokenURI  = "token_uri"
-	AttributeKeyDenomID   = "denom_id"
-	AttributeKeyDenomName = "denom_name"
+	AttributeKeyClassID   = "class_id"
+	AttributeKeyClassName = "class_name"
 )

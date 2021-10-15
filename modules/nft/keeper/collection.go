@@ -18,7 +18,7 @@ func (k Keeper) SetCollection(ctx sdk.Context, collection types.Collection) erro
 	for _, nft := range collection.NFTs {
 		if err := k.MintNFT(
 			ctx,
-			collection.Denom.Id,
+			collection.Class.Id,
 			nft.GetID(),
 			nft.GetName(),
 			nft.GetURI(),
@@ -31,51 +31,51 @@ func (k Keeper) SetCollection(ctx sdk.Context, collection types.Collection) erro
 	return nil
 }
 
-// GetCollection returns the collection by the specified denom ID
-func (k Keeper) GetCollection(ctx sdk.Context, denomID string) (types.Collection, error) {
-	denom, found := k.GetDenom(ctx, denomID)
+// GetCollection returns the collection by the specified class ID
+func (k Keeper) GetCollection(ctx sdk.Context, classID string) (types.Collection, error) {
+	class, found := k.GetClass(ctx, classID)
 	if !found {
-		return types.Collection{}, sdkerrors.Wrapf(types.ErrInvalidDenom, "denomID %s not existed ", denomID)
+		return types.Collection{}, sdkerrors.Wrapf(types.ErrInvalidClass, "classID %s not existed ", classID)
 	}
 
-	nfts := k.GetNFTs(ctx, denomID)
-	return types.NewCollection(denom, nfts), nil
+	nfts := k.GetNFTs(ctx, classID)
+	return types.NewCollection(class, nfts), nil
 }
 
-// GetPaginateCollection returns the collection by the specified denom ID
-func (k Keeper) GetPaginateCollection(ctx sdk.Context, request *types.QueryCollectionRequest, denomID string) (types.Collection, *query.PageResponse, error) {
-	denom, found := k.GetDenom(ctx, denomID)
+// GetPaginateCollection returns the collection by the specified class ID
+func (k Keeper) GetPaginateCollection(ctx sdk.Context, request *types.QueryCollectionRequest, classID string) (types.Collection, *query.PageResponse, error) {
+	class, found := k.GetClass(ctx, classID)
 	if !found {
-		return types.Collection{}, nil, sdkerrors.Wrapf(types.ErrInvalidDenom, "denomID %s not existed ", denomID)
+		return types.Collection{}, nil, sdkerrors.Wrapf(types.ErrInvalidClass, "classID %s not existed ", classID)
 	}
 	var nfts []exported.NFT
 	store := ctx.KVStore(k.storeKey)
-	nftStore := prefix.NewStore(store, types.KeyNFT(denomID, ""))
+	nftStore := prefix.NewStore(store, types.KeyNFT(classID, ""))
 	pageRes, err := query.Paginate(nftStore, request.Pagination, func(key []byte, value []byte) error {
-		var baseNFT types.BaseNFT
-		k.cdc.MustUnmarshal(value, &baseNFT)
-		nfts = append(nfts, baseNFT)
+		var NFT types.NFT
+		k.cdc.MustUnmarshal(value, &NFT)
+		nfts = append(nfts, NFT)
 		return nil
 	})
 	if err != nil {
 		return types.Collection{}, nil, status.Errorf(codes.InvalidArgument, "paginate: %v", err)
 	}
-	return types.NewCollection(denom, nfts), pageRes, nil
+	return types.NewCollection(class, nfts), pageRes, nil
 }
 
 // GetCollections returns all the collections
 func (k Keeper) GetCollections(ctx sdk.Context) (cs []types.Collection) {
-	for _, denom := range k.GetDenoms(ctx) {
-		nfts := k.GetNFTs(ctx, denom.Id)
-		cs = append(cs, types.NewCollection(denom, nfts))
+	for _, class := range k.GetClasses(ctx) {
+		nfts := k.GetNFTs(ctx, class.Id)
+		cs = append(cs, types.NewCollection(class, nfts))
 	}
 	return cs
 }
 
-// GetTotalSupply returns the number of NFTs by the specified denom ID
-func (k Keeper) GetTotalSupply(ctx sdk.Context, denomID string) uint64 {
+// GetTotalSupply returns the number of NFTs by the specified class ID
+func (k Keeper) GetTotalSupply(ctx sdk.Context, classID string) uint64 {
 	store := ctx.KVStore(k.storeKey)
-	bz := store.Get(types.KeyCollection(denomID))
+	bz := store.Get(types.KeyCollection(classID))
 	if len(bz) == 0 {
 		return 0
 	}
@@ -93,25 +93,25 @@ func (k Keeper) GetTotalSupplyOfOwner(ctx sdk.Context, id string, owner sdk.AccA
 	return supply
 }
 
-func (k Keeper) increaseSupply(ctx sdk.Context, denomID string) {
-	supply := k.GetTotalSupply(ctx, denomID)
+func (k Keeper) increaseSupply(ctx sdk.Context, classID string) {
+	supply := k.GetTotalSupply(ctx, classID)
 	supply++
 
 	store := ctx.KVStore(k.storeKey)
 	bz := types.MustMarshalSupply(k.cdc, supply)
-	store.Set(types.KeyCollection(denomID), bz)
+	store.Set(types.KeyCollection(classID), bz)
 }
 
-func (k Keeper) decreaseSupply(ctx sdk.Context, denomID string) {
-	supply := k.GetTotalSupply(ctx, denomID)
+func (k Keeper) decreaseSupply(ctx sdk.Context, classID string) {
+	supply := k.GetTotalSupply(ctx, classID)
 	supply--
 
 	store := ctx.KVStore(k.storeKey)
 	if supply == 0 {
-		store.Delete(types.KeyCollection(denomID))
+		store.Delete(types.KeyCollection(classID))
 		return
 	}
 
 	bz := types.MustMarshalSupply(k.cdc, supply)
-	store.Set(types.KeyCollection(denomID), bz)
+	store.Set(types.KeyCollection(classID), bz)
 }

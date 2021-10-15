@@ -32,7 +32,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // QuerySupplyRequest is the request type for the Query/HTLC RPC method
 type QuerySupplyRequest struct {
-	DenomId string `protobuf:"bytes,1,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId string `protobuf:"bytes,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	Owner   string `protobuf:"bytes,2,opt,name=owner,proto3" json:"owner,omitempty"`
 }
 
@@ -69,9 +69,9 @@ func (m *QuerySupplyRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QuerySupplyRequest proto.InternalMessageInfo
 
-func (m *QuerySupplyRequest) GetDenomId() string {
+func (m *QuerySupplyRequest) GetClassId() string {
 	if m != nil {
-		return m.DenomId
+		return m.ClassId
 	}
 	return ""
 }
@@ -130,7 +130,7 @@ func (m *QuerySupplyResponse) GetAmount() uint64 {
 
 // QueryOwnerRequest is the request type for the Query/Owner RPC method
 type QueryOwnerRequest struct {
-	DenomId string `protobuf:"bytes,1,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId string `protobuf:"bytes,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	Owner   string `protobuf:"bytes,2,opt,name=owner,proto3" json:"owner,omitempty" yaml:"owner"`
 	// pagination defines an optional pagination for the request.
 	Pagination *query.PageRequest `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
@@ -169,9 +169,9 @@ func (m *QueryOwnerRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryOwnerRequest proto.InternalMessageInfo
 
-func (m *QueryOwnerRequest) GetDenomId() string {
+func (m *QueryOwnerRequest) GetClassId() string {
 	if m != nil {
-		return m.DenomId
+		return m.ClassId
 	}
 	return ""
 }
@@ -245,7 +245,7 @@ func (m *QueryOwnerResponse) GetPagination() *query.PageResponse {
 
 // QueryCollectionRequest is the request type for the Query/Collection RPC method
 type QueryCollectionRequest struct {
-	DenomId string `protobuf:"bytes,1,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId string `protobuf:"bytes,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	// pagination defines an optional pagination for the request.
 	Pagination *query.PageRequest `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
@@ -283,9 +283,9 @@ func (m *QueryCollectionRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryCollectionRequest proto.InternalMessageInfo
 
-func (m *QueryCollectionRequest) GetDenomId() string {
+func (m *QueryCollectionRequest) GetClassId() string {
 	if m != nil {
-		return m.DenomId
+		return m.ClassId
 	}
 	return ""
 }
@@ -350,23 +350,23 @@ func (m *QueryCollectionResponse) GetPagination() *query.PageResponse {
 	return nil
 }
 
-// QueryDenomRequest is the request type for the Query/Denom RPC method
-type QueryDenomRequest struct {
-	DenomId string `protobuf:"bytes,1,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+// QueryClassRequest is the request type for the Query/Class RPC method
+type QueryClassRequest struct {
+	ClassId string `protobuf:"bytes,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 }
 
-func (m *QueryDenomRequest) Reset()         { *m = QueryDenomRequest{} }
-func (m *QueryDenomRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryDenomRequest) ProtoMessage()    {}
-func (*QueryDenomRequest) Descriptor() ([]byte, []int) {
+func (m *QueryClassRequest) Reset()         { *m = QueryClassRequest{} }
+func (m *QueryClassRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryClassRequest) ProtoMessage()    {}
+func (*QueryClassRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ce02d034d3adf2e9, []int{6}
 }
-func (m *QueryDenomRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryClassRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryDenomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryClassRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryDenomRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryClassRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -376,42 +376,42 @@ func (m *QueryDenomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *QueryDenomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryDenomRequest.Merge(m, src)
+func (m *QueryClassRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryClassRequest.Merge(m, src)
 }
-func (m *QueryDenomRequest) XXX_Size() int {
+func (m *QueryClassRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryDenomRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryDenomRequest.DiscardUnknown(m)
+func (m *QueryClassRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryClassRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryDenomRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryClassRequest proto.InternalMessageInfo
 
-func (m *QueryDenomRequest) GetDenomId() string {
+func (m *QueryClassRequest) GetClassId() string {
 	if m != nil {
-		return m.DenomId
+		return m.ClassId
 	}
 	return ""
 }
 
-// QueryDenomResponse is the response type for the Query/Denom RPC method
-type QueryDenomResponse struct {
-	Denom *Denom `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom,omitempty"`
+// QueryClassResponse is the response type for the Query/Class RPC method
+type QueryClassResponse struct {
+	Class *Class `protobuf:"bytes,1,opt,name=class,proto3" json:"class,omitempty"`
 }
 
-func (m *QueryDenomResponse) Reset()         { *m = QueryDenomResponse{} }
-func (m *QueryDenomResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryDenomResponse) ProtoMessage()    {}
-func (*QueryDenomResponse) Descriptor() ([]byte, []int) {
+func (m *QueryClassResponse) Reset()         { *m = QueryClassResponse{} }
+func (m *QueryClassResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryClassResponse) ProtoMessage()    {}
+func (*QueryClassResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ce02d034d3adf2e9, []int{7}
 }
-func (m *QueryDenomResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryClassResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryDenomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryClassResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryDenomResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryClassResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -421,43 +421,43 @@ func (m *QueryDenomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (m *QueryDenomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryDenomResponse.Merge(m, src)
+func (m *QueryClassResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryClassResponse.Merge(m, src)
 }
-func (m *QueryDenomResponse) XXX_Size() int {
+func (m *QueryClassResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryDenomResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryDenomResponse.DiscardUnknown(m)
+func (m *QueryClassResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryClassResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryDenomResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryClassResponse proto.InternalMessageInfo
 
-func (m *QueryDenomResponse) GetDenom() *Denom {
+func (m *QueryClassResponse) GetClass() *Class {
 	if m != nil {
-		return m.Denom
+		return m.Class
 	}
 	return nil
 }
 
-// QueryDenomsRequest is the request type for the Query/Denoms RPC method
-type QueryDenomsRequest struct {
+// QueryClassesRequest is the request type for the Query/Classes RPC method
+type QueryClassesRequest struct {
 	// pagination defines an optional pagination for the request.
 	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (m *QueryDenomsRequest) Reset()         { *m = QueryDenomsRequest{} }
-func (m *QueryDenomsRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryDenomsRequest) ProtoMessage()    {}
-func (*QueryDenomsRequest) Descriptor() ([]byte, []int) {
+func (m *QueryClassesRequest) Reset()         { *m = QueryClassesRequest{} }
+func (m *QueryClassesRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryClassesRequest) ProtoMessage()    {}
+func (*QueryClassesRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ce02d034d3adf2e9, []int{8}
 }
-func (m *QueryDenomsRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryClassesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryDenomsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryClassesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryDenomsRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryClassesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -467,43 +467,43 @@ func (m *QueryDenomsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (m *QueryDenomsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryDenomsRequest.Merge(m, src)
+func (m *QueryClassesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryClassesRequest.Merge(m, src)
 }
-func (m *QueryDenomsRequest) XXX_Size() int {
+func (m *QueryClassesRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryDenomsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryDenomsRequest.DiscardUnknown(m)
+func (m *QueryClassesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryClassesRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryDenomsRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryClassesRequest proto.InternalMessageInfo
 
-func (m *QueryDenomsRequest) GetPagination() *query.PageRequest {
+func (m *QueryClassesRequest) GetPagination() *query.PageRequest {
 	if m != nil {
 		return m.Pagination
 	}
 	return nil
 }
 
-// QueryDenomsResponse is the response type for the Query/Denoms RPC method
-type QueryDenomsResponse struct {
-	Denoms     []Denom             `protobuf:"bytes,1,rep,name=denoms,proto3" json:"denoms"`
+// QueryClassesResponse is the response type for the Query/Classes RPC method
+type QueryClassesResponse struct {
+	Classes    []Class             `protobuf:"bytes,1,rep,name=classes,proto3" json:"classes"`
 	Pagination *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (m *QueryDenomsResponse) Reset()         { *m = QueryDenomsResponse{} }
-func (m *QueryDenomsResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryDenomsResponse) ProtoMessage()    {}
-func (*QueryDenomsResponse) Descriptor() ([]byte, []int) {
+func (m *QueryClassesResponse) Reset()         { *m = QueryClassesResponse{} }
+func (m *QueryClassesResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryClassesResponse) ProtoMessage()    {}
+func (*QueryClassesResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ce02d034d3adf2e9, []int{9}
 }
-func (m *QueryDenomsResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryClassesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryDenomsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryClassesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryDenomsResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryClassesResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -513,26 +513,26 @@ func (m *QueryDenomsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return b[:n], nil
 	}
 }
-func (m *QueryDenomsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryDenomsResponse.Merge(m, src)
+func (m *QueryClassesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryClassesResponse.Merge(m, src)
 }
-func (m *QueryDenomsResponse) XXX_Size() int {
+func (m *QueryClassesResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryDenomsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryDenomsResponse.DiscardUnknown(m)
+func (m *QueryClassesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryClassesResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryDenomsResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryClassesResponse proto.InternalMessageInfo
 
-func (m *QueryDenomsResponse) GetDenoms() []Denom {
+func (m *QueryClassesResponse) GetClasses() []Class {
 	if m != nil {
-		return m.Denoms
+		return m.Classes
 	}
 	return nil
 }
 
-func (m *QueryDenomsResponse) GetPagination() *query.PageResponse {
+func (m *QueryClassesResponse) GetPagination() *query.PageResponse {
 	if m != nil {
 		return m.Pagination
 	}
@@ -541,7 +541,7 @@ func (m *QueryDenomsResponse) GetPagination() *query.PageResponse {
 
 // QueryNFTRequest is the request type for the Query/NFT RPC method
 type QueryNFTRequest struct {
-	DenomId string `protobuf:"bytes,1,opt,name=denom_id,json=denomId,proto3" json:"denom_id,omitempty" yaml:"denom_id"`
+	ClassId string `protobuf:"bytes,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty" yaml:"class_id"`
 	TokenId string `protobuf:"bytes,2,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty" yaml:"token_id"`
 }
 
@@ -578,9 +578,9 @@ func (m *QueryNFTRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryNFTRequest proto.InternalMessageInfo
 
-func (m *QueryNFTRequest) GetDenomId() string {
+func (m *QueryNFTRequest) GetClassId() string {
 	if m != nil {
-		return m.DenomId
+		return m.ClassId
 	}
 	return ""
 }
@@ -594,7 +594,7 @@ func (m *QueryNFTRequest) GetTokenId() string {
 
 // QueryNFTResponse is the response type for the Query/NFT RPC method
 type QueryNFTResponse struct {
-	NFT *BaseNFT `protobuf:"bytes,1,opt,name=nft,proto3" json:"nft,omitempty"`
+	NFT *NFT `protobuf:"bytes,1,opt,name=nft,proto3" json:"nft,omitempty"`
 }
 
 func (m *QueryNFTResponse) Reset()         { *m = QueryNFTResponse{} }
@@ -630,7 +630,7 @@ func (m *QueryNFTResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryNFTResponse proto.InternalMessageInfo
 
-func (m *QueryNFTResponse) GetNFT() *BaseNFT {
+func (m *QueryNFTResponse) GetNFT() *NFT {
 	if m != nil {
 		return m.NFT
 	}
@@ -644,10 +644,10 @@ func init() {
 	proto.RegisterType((*QueryOwnerResponse)(nil), "irismod.nft.QueryOwnerResponse")
 	proto.RegisterType((*QueryCollectionRequest)(nil), "irismod.nft.QueryCollectionRequest")
 	proto.RegisterType((*QueryCollectionResponse)(nil), "irismod.nft.QueryCollectionResponse")
-	proto.RegisterType((*QueryDenomRequest)(nil), "irismod.nft.QueryDenomRequest")
-	proto.RegisterType((*QueryDenomResponse)(nil), "irismod.nft.QueryDenomResponse")
-	proto.RegisterType((*QueryDenomsRequest)(nil), "irismod.nft.QueryDenomsRequest")
-	proto.RegisterType((*QueryDenomsResponse)(nil), "irismod.nft.QueryDenomsResponse")
+	proto.RegisterType((*QueryClassRequest)(nil), "irismod.nft.QueryClassRequest")
+	proto.RegisterType((*QueryClassResponse)(nil), "irismod.nft.QueryClassResponse")
+	proto.RegisterType((*QueryClassesRequest)(nil), "irismod.nft.QueryClassesRequest")
+	proto.RegisterType((*QueryClassesResponse)(nil), "irismod.nft.QueryClassesResponse")
 	proto.RegisterType((*QueryNFTRequest)(nil), "irismod.nft.QueryNFTRequest")
 	proto.RegisterType((*QueryNFTResponse)(nil), "irismod.nft.QueryNFTResponse")
 }
@@ -718,17 +718,17 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type QueryClient interface {
-	// Supply queries the total supply of a given denom or owner
+	// Supply queries the total supply of a given class or owner
 	Supply(ctx context.Context, in *QuerySupplyRequest, opts ...grpc.CallOption) (*QuerySupplyResponse, error)
 	// Owner queries the NFTs of the specified owner
 	Owner(ctx context.Context, in *QueryOwnerRequest, opts ...grpc.CallOption) (*QueryOwnerResponse, error)
-	// Collection queries the NFTs of the specified denom
+	// Collection queries the NFTs of the specified class
 	Collection(ctx context.Context, in *QueryCollectionRequest, opts ...grpc.CallOption) (*QueryCollectionResponse, error)
-	// Denom queries the definition of a given denom
-	Denom(ctx context.Context, in *QueryDenomRequest, opts ...grpc.CallOption) (*QueryDenomResponse, error)
-	// Denoms queries all the denoms
-	Denoms(ctx context.Context, in *QueryDenomsRequest, opts ...grpc.CallOption) (*QueryDenomsResponse, error)
-	// NFT queries the NFT for the given denom and token ID
+	// Class queries the definition of a given class
+	Class(ctx context.Context, in *QueryClassRequest, opts ...grpc.CallOption) (*QueryClassResponse, error)
+	// Classes queries all the classes
+	Classes(ctx context.Context, in *QueryClassesRequest, opts ...grpc.CallOption) (*QueryClassesResponse, error)
+	// NFT queries the NFT for the given class and token ID
 	NFT(ctx context.Context, in *QueryNFTRequest, opts ...grpc.CallOption) (*QueryNFTResponse, error)
 }
 
@@ -767,18 +767,18 @@ func (c *queryClient) Collection(ctx context.Context, in *QueryCollectionRequest
 	return out, nil
 }
 
-func (c *queryClient) Denom(ctx context.Context, in *QueryDenomRequest, opts ...grpc.CallOption) (*QueryDenomResponse, error) {
-	out := new(QueryDenomResponse)
-	err := c.cc.Invoke(ctx, "/irismod.nft.Query/Denom", in, out, opts...)
+func (c *queryClient) Class(ctx context.Context, in *QueryClassRequest, opts ...grpc.CallOption) (*QueryClassResponse, error) {
+	out := new(QueryClassResponse)
+	err := c.cc.Invoke(ctx, "/irismod.nft.Query/Class", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) Denoms(ctx context.Context, in *QueryDenomsRequest, opts ...grpc.CallOption) (*QueryDenomsResponse, error) {
-	out := new(QueryDenomsResponse)
-	err := c.cc.Invoke(ctx, "/irismod.nft.Query/Denoms", in, out, opts...)
+func (c *queryClient) Classes(ctx context.Context, in *QueryClassesRequest, opts ...grpc.CallOption) (*QueryClassesResponse, error) {
+	out := new(QueryClassesResponse)
+	err := c.cc.Invoke(ctx, "/irismod.nft.Query/Classes", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -796,17 +796,17 @@ func (c *queryClient) NFT(ctx context.Context, in *QueryNFTRequest, opts ...grpc
 
 // QueryServer is the server API for Query service.
 type QueryServer interface {
-	// Supply queries the total supply of a given denom or owner
+	// Supply queries the total supply of a given class or owner
 	Supply(context.Context, *QuerySupplyRequest) (*QuerySupplyResponse, error)
 	// Owner queries the NFTs of the specified owner
 	Owner(context.Context, *QueryOwnerRequest) (*QueryOwnerResponse, error)
-	// Collection queries the NFTs of the specified denom
+	// Collection queries the NFTs of the specified class
 	Collection(context.Context, *QueryCollectionRequest) (*QueryCollectionResponse, error)
-	// Denom queries the definition of a given denom
-	Denom(context.Context, *QueryDenomRequest) (*QueryDenomResponse, error)
-	// Denoms queries all the denoms
-	Denoms(context.Context, *QueryDenomsRequest) (*QueryDenomsResponse, error)
-	// NFT queries the NFT for the given denom and token ID
+	// Class queries the definition of a given class
+	Class(context.Context, *QueryClassRequest) (*QueryClassResponse, error)
+	// Classes queries all the classes
+	Classes(context.Context, *QueryClassesRequest) (*QueryClassesResponse, error)
+	// NFT queries the NFT for the given class and token ID
 	NFT(context.Context, *QueryNFTRequest) (*QueryNFTResponse, error)
 }
 
@@ -823,11 +823,11 @@ func (*UnimplementedQueryServer) Owner(ctx context.Context, req *QueryOwnerReque
 func (*UnimplementedQueryServer) Collection(ctx context.Context, req *QueryCollectionRequest) (*QueryCollectionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Collection not implemented")
 }
-func (*UnimplementedQueryServer) Denom(ctx context.Context, req *QueryDenomRequest) (*QueryDenomResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Denom not implemented")
+func (*UnimplementedQueryServer) Class(ctx context.Context, req *QueryClassRequest) (*QueryClassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Class not implemented")
 }
-func (*UnimplementedQueryServer) Denoms(ctx context.Context, req *QueryDenomsRequest) (*QueryDenomsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Denoms not implemented")
+func (*UnimplementedQueryServer) Classes(ctx context.Context, req *QueryClassesRequest) (*QueryClassesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Classes not implemented")
 }
 func (*UnimplementedQueryServer) NFT(ctx context.Context, req *QueryNFTRequest) (*QueryNFTResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NFT not implemented")
@@ -891,38 +891,38 @@ func _Query_Collection_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Denom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryDenomRequest)
+func _Query_Class_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryClassRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).Denom(ctx, in)
+		return srv.(QueryServer).Class(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/irismod.nft.Query/Denom",
+		FullMethod: "/irismod.nft.Query/Class",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Denom(ctx, req.(*QueryDenomRequest))
+		return srv.(QueryServer).Class(ctx, req.(*QueryClassRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Denoms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryDenomsRequest)
+func _Query_Classes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryClassesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).Denoms(ctx, in)
+		return srv.(QueryServer).Classes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/irismod.nft.Query/Denoms",
+		FullMethod: "/irismod.nft.Query/Classes",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Denoms(ctx, req.(*QueryDenomsRequest))
+		return srv.(QueryServer).Classes(ctx, req.(*QueryClassesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -962,12 +962,12 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_Collection_Handler,
 		},
 		{
-			MethodName: "Denom",
-			Handler:    _Query_Denom_Handler,
+			MethodName: "Class",
+			Handler:    _Query_Class_Handler,
 		},
 		{
-			MethodName: "Denoms",
-			Handler:    _Query_Denoms_Handler,
+			MethodName: "Classes",
+			Handler:    _Query_Classes_Handler,
 		},
 		{
 			MethodName: "NFT",
@@ -1005,10 +1005,10 @@ func (m *QuerySupplyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1082,10 +1082,10 @@ func (m *QueryOwnerRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1171,10 +1171,10 @@ func (m *QueryCollectionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1228,7 +1228,7 @@ func (m *QueryCollectionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryDenomRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryClassRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1238,27 +1238,27 @@ func (m *QueryDenomRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryDenomRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryClassRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryDenomRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryClassRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryDenomResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryClassResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1268,19 +1268,19 @@ func (m *QueryDenomResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryDenomResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryClassResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryDenomResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryClassResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Denom != nil {
+	if m.Class != nil {
 		{
-			size, err := m.Denom.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Class.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -1293,7 +1293,7 @@ func (m *QueryDenomResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryDenomsRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryClassesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1303,12 +1303,12 @@ func (m *QueryDenomsRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryDenomsRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryClassesRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryDenomsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryClassesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1328,7 +1328,7 @@ func (m *QueryDenomsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryDenomsResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryClassesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1338,12 +1338,12 @@ func (m *QueryDenomsResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryDenomsResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryClassesResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryDenomsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryClassesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1360,10 +1360,10 @@ func (m *QueryDenomsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Denoms) > 0 {
-		for iNdEx := len(m.Denoms) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.Classes) > 0 {
+		for iNdEx := len(m.Classes) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.Denoms[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.Classes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -1404,10 +1404,10 @@ func (m *QueryNFTRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.DenomId) > 0 {
-		i -= len(m.DenomId)
-		copy(dAtA[i:], m.DenomId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.DenomId)))
+	if len(m.ClassId) > 0 {
+		i -= len(m.ClassId)
+		copy(dAtA[i:], m.ClassId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ClassId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1466,7 +1466,7 @@ func (m *QuerySupplyRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
@@ -1495,7 +1495,7 @@ func (m *QueryOwnerRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
@@ -1533,7 +1533,7 @@ func (m *QueryCollectionRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
@@ -1561,33 +1561,33 @@ func (m *QueryCollectionResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryDenomRequest) Size() (n int) {
+func (m *QueryClassRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
 	return n
 }
 
-func (m *QueryDenomResponse) Size() (n int) {
+func (m *QueryClassResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Denom != nil {
-		l = m.Denom.Size()
+	if m.Class != nil {
+		l = m.Class.Size()
 		n += 1 + l + sovQuery(uint64(l))
 	}
 	return n
 }
 
-func (m *QueryDenomsRequest) Size() (n int) {
+func (m *QueryClassesRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1600,14 +1600,14 @@ func (m *QueryDenomsRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryDenomsResponse) Size() (n int) {
+func (m *QueryClassesResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.Denoms) > 0 {
-		for _, e := range m.Denoms {
+	if len(m.Classes) > 0 {
+		for _, e := range m.Classes {
 			l = e.Size()
 			n += 1 + l + sovQuery(uint64(l))
 		}
@@ -1625,7 +1625,7 @@ func (m *QueryNFTRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.DenomId)
+	l = len(m.ClassId)
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
@@ -1686,7 +1686,7 @@ func (m *QuerySupplyRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1714,7 +1714,7 @@ func (m *QuerySupplyRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1869,7 +1869,7 @@ func (m *QueryOwnerRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1897,7 +1897,7 @@ func (m *QueryOwnerRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2141,7 +2141,7 @@ func (m *QueryCollectionRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2169,7 +2169,7 @@ func (m *QueryCollectionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2350,7 +2350,7 @@ func (m *QueryCollectionResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryDenomRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryClassRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2373,15 +2373,15 @@ func (m *QueryDenomRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryDenomRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryClassRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryDenomRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryClassRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2409,7 +2409,7 @@ func (m *QueryDenomRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2432,7 +2432,7 @@ func (m *QueryDenomRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryDenomResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryClassResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2455,15 +2455,15 @@ func (m *QueryDenomResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryDenomResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryClassResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryDenomResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryClassResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Class", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -2490,10 +2490,10 @@ func (m *QueryDenomResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Denom == nil {
-				m.Denom = &Denom{}
+			if m.Class == nil {
+				m.Class = &Class{}
 			}
-			if err := m.Denom.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Class.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2518,7 +2518,7 @@ func (m *QueryDenomResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryDenomsRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryClassesRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2541,10 +2541,10 @@ func (m *QueryDenomsRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryDenomsRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryClassesRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryDenomsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryClassesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2604,7 +2604,7 @@ func (m *QueryDenomsRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryDenomsResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryClassesResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2627,15 +2627,15 @@ func (m *QueryDenomsResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryDenomsResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryClassesResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryDenomsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryClassesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Denoms", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Classes", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -2662,8 +2662,8 @@ func (m *QueryDenomsResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Denoms = append(m.Denoms, Denom{})
-			if err := m.Denoms[len(m.Denoms)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.Classes = append(m.Classes, Class{})
+			if err := m.Classes[len(m.Classes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2755,7 +2755,7 @@ func (m *QueryNFTRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DenomId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ClassId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2783,7 +2783,7 @@ func (m *QueryNFTRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DenomId = string(dAtA[iNdEx:postIndex])
+			m.ClassId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2897,7 +2897,7 @@ func (m *QueryNFTResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.NFT == nil {
-				m.NFT = &BaseNFT{}
+				m.NFT = &NFT{}
 			}
 			if err := m.NFT.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

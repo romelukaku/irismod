@@ -7,60 +7,60 @@ import (
 	"github.com/irisnet/irismod/modules/nft/types"
 )
 
-// HasDenomID returns whether the specified denom ID exists
-func (k Keeper) HasDenomID(ctx sdk.Context, id string) bool {
+// HasClassID returns whether the specified class ID exists
+func (k Keeper) HasClassID(ctx sdk.Context, id string) bool {
 	store := ctx.KVStore(k.storeKey)
-	return store.Has(types.KeyDenomID(id))
+	return store.Has(types.KeyClassID(id))
 }
 
-// SetDenom is responsible for saving the definition of denom
-func (k Keeper) SetDenom(ctx sdk.Context, denom types.Denom) error {
-	if k.HasDenomID(ctx, denom.Id) {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denomID %s has already exists", denom.Id)
+// SetClass is responsible for saving the definition of class
+func (k Keeper) SetClass(ctx sdk.Context, class types.Class) error {
+	if k.HasClassID(ctx, class.Id) {
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "classID %s has already exists", class.Id)
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	bz := k.cdc.MustMarshal(&denom)
-	store.Set(types.KeyDenomID(denom.Id), bz)
-	store.Set(types.KeyDenomName(denom.Name), []byte(denom.Id))
+	bz := k.cdc.MustMarshal(&class)
+	store.Set(types.KeyClassID(class.Id), bz)
+	store.Set(types.KeyClassName(class.Name), []byte(class.Id))
 	return nil
 }
 
-// GetDenom returns the denom by id
-func (k Keeper) GetDenom(ctx sdk.Context, id string) (denom types.Denom, found bool) {
+// GetClass returns the class by id
+func (k Keeper) GetClass(ctx sdk.Context, id string) (class types.Class, found bool) {
 	store := ctx.KVStore(k.storeKey)
 
-	bz := store.Get(types.KeyDenomID(id))
+	bz := store.Get(types.KeyClassID(id))
 	if len(bz) == 0 {
-		return denom, false
+		return class, false
 	}
 
-	k.cdc.MustUnmarshal(bz, &denom)
-	return denom, true
+	k.cdc.MustUnmarshal(bz, &class)
+	return class, true
 }
 
-// GetDenoms returns all the denoms
-func (k Keeper) GetDenoms(ctx sdk.Context) (denoms []types.Denom) {
+// GetClasses returns all the classes
+func (k Keeper) GetClasses(ctx sdk.Context) (classes []types.Class) {
 	store := ctx.KVStore(k.storeKey)
-	iterator := sdk.KVStorePrefixIterator(store, types.KeyDenomID(""))
+	iterator := sdk.KVStorePrefixIterator(store, types.KeyClassID(""))
 	defer iterator.Close()
 
 	for ; iterator.Valid(); iterator.Next() {
-		var denom types.Denom
-		k.cdc.MustUnmarshal(iterator.Value(), &denom)
-		denoms = append(denoms, denom)
+		var class types.Class
+		k.cdc.MustUnmarshal(iterator.Value(), &class)
+		classes = append(classes, class)
 	}
-	return denoms
+	return classes
 }
 
-// UpdateDenom is responsible for updating the definition of denom
-func (k Keeper) UpdateDenom(ctx sdk.Context, denom types.Denom) error {
-	if !k.HasDenomID(ctx, denom.Id) {
-		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denomID %s not exists", denom.Id)
+// UpdateClass is responsible for updating the definition of class
+func (k Keeper) UpdateClass(ctx sdk.Context, class types.Class) error {
+	if !k.HasClassID(ctx, class.Id) {
+		return sdkerrors.Wrapf(types.ErrInvalidClass, "classID %s not exists", class.Id)
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	bz := k.cdc.MustMarshal(&denom)
-	store.Set(types.KeyDenomID(denom.Id), bz)
+	bz := k.cdc.MustMarshal(&class)
+	store.Set(types.KeyClassID(class.Id), bz)
 	return nil
 }
